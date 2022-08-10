@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 
 import 'package:ecommerce_app/components/horizontallistview.dart';
+import 'package:ecommerce_app/components/products.dart';
 
 void main() {
   return runApp(const MaterialApp(
@@ -137,6 +138,14 @@ class _HomePageState extends State<HomePage> {
             child: Text("Categories"),
           ),
           const HorizontalList(),
+          const Padding(
+            padding: EdgeInsets.all(15.0),
+            child: Text("Recent products"),
+          ),
+          Container(
+            height: 350.0,
+            child: Products(),
+          )
         ],
       ),
     );
