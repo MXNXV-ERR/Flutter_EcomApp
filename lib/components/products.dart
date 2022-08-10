@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:ecommerce_app/pages/productdetails.dart';
 
 class Products extends StatefulWidget {
   const Products({Key? key}) : super(key: key);
@@ -12,13 +14,13 @@ class _ProductsState extends State<Products> {
   var product_list = [
     {
       "name": "Product 1",
-      "pic": "assets/imgs.1.jpg",
+      "pic": "assets/imgs/1.jpg",
       "oprice": 100,
       "price": 50,
     },
     {
-      "name": "Product 1",
-      "pic": "assets/imgs.1.jpg",
+      "name": "Product 2",
+      "pic": "assets/imgs/1.jpg",
       "oprice": 100,
       "price": 50,
     },
@@ -50,8 +52,43 @@ class Single_prod extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text("test"),
+    return Card(
+      child: Hero(
+          tag: name,
+          child: Material(
+            child: InkWell(
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: ((context) => const Product_Details()))),
+              child: GridTile(
+                footer: Container(
+                  color: Colors.white70,
+                  child: ListTile(
+                    leading: Text(
+                      name,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    title: Text(
+                      "\$$price",
+                      style: const TextStyle(
+                          color: Colors.green, fontWeight: FontWeight.w800),
+                    ),
+                    subtitle: Text(
+                      "\$$oprice",
+                      style: const TextStyle(
+                          decorationThickness: 3.0,
+                          decoration: TextDecoration.lineThrough,
+                          color: Color.fromARGB(255, 119, 118, 118),
+                          fontWeight: FontWeight.w800),
+                    ),
+                  ),
+                ),
+                child: Image.asset(
+                  pic,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          )),
     );
   }
 }

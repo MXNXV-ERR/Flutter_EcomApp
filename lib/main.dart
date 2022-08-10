@@ -39,6 +39,7 @@ class _HomePageState extends State<HomePage> {
     );
 
     return Scaffold(
+      backgroundColor: Colors.white70,
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
         title: const Text("EcomApp"),
