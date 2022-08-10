@@ -58,7 +58,12 @@ class Single_prod extends StatelessWidget {
           child: Material(
             child: InkWell(
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                  builder: ((context) => const Product_Details()))),
+                  builder: ((context) => Product_Details(
+                        name: name,
+                        price: price,
+                        oprice: oprice,
+                        pic: pic,
+                      )))),
               child: GridTile(
                 footer: Container(
                   color: Colors.white70,
