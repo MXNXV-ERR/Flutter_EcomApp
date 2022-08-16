@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 
 class CartProds extends StatefulWidget {
@@ -15,7 +17,7 @@ class _CartProdsState extends State<CartProds> {
       "price": 50,
       "size": "M",
       "color": "Red",
-      "quantity": 1,
+      "qty": "1",
     },
     {
       "name": "Product 2",
@@ -23,13 +25,14 @@ class _CartProdsState extends State<CartProds> {
       "price": 50,
       "size": "M",
       "color": "Red",
-      "quantity": 1,
+      "qty": 1,
     }
   ];
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+        itemExtent: 150.0,
         itemCount: Prod_in_cart.length,
         itemBuilder: (context, index) {
           return SingleCartProd(
@@ -63,20 +66,84 @@ class SingleCartProd extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-        child: ListTile(
-      title: Text(
-        cart_name,
+      child: ListTile(
+        dense: true,
+        leading: Image.asset(
+          cart_pic,
+          width: 120.0,
+          height: 120.0,
+        ),
+        title: Text(
+          cart_name,
+        ),
+        subtitle: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Size:"),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    cart_size,
+                    style: TextStyle(color: Colors.blueGrey),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text("Color:"),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(cart_color,
+                      style: TextStyle(color: Colors.blueGrey)),
+                ),
+              ],
+            ),
+            Container(
+              alignment: Alignment.topLeft,
+              child: Text(
+                "\$${cart_price}",
+                style: TextStyle(
+                    color: Colors.blueGrey,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            Container(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: EdgeInsets.only(top: 15.0),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.remove),
+                      onPressed: () {},
+                    ),
+                    Container(
+                        width: 25.0,
+                        height: 25.0,
+                        decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                            border: Border.all(
+                              color: Colors.blueGrey,
+                            )),
+                        child: Center(child: Text("${cart_qty}"))),
+                    IconButton(
+                      icon: Icon(Icons.add),
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
-      subtitle: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(child: Text("Size:")),
-              Expanded(child: Text("Color:"))
-            ],
-          )
-        ],
-      ),
-    ));
+    );
   }
 }
