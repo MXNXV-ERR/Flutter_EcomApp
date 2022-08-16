@@ -3,6 +3,7 @@ import 'package:carousel_pro/carousel_pro.dart';
 
 import 'package:ecommerce_app/components/horizontallistview.dart';
 import 'package:ecommerce_app/components/products.dart';
+import 'package:ecommerce_app/pages/cart.dart';
 
 void main() {
   return runApp(const MaterialApp(
@@ -44,7 +45,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
         title: const Text("EcomApp"),
-        actions: const [
+        actions: [
           IconButton(
             onPressed: null,
             icon: Icon(
@@ -53,7 +54,10 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           IconButton(
-            onPressed: null,
+            onPressed: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => Cart()));
+            },
             icon: Icon(
               Icons.shopping_bag,
               color: Colors.white,
@@ -99,7 +103,10 @@ class _HomePageState extends State<HomePage> {
                   leading: Icon(Icons.shopping_bag, color: Colors.blueGrey),
                 )),
             InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => Cart()));
+                },
                 child: ListTile(
                   title: Text("Shopping Cart"),
                   leading: Icon(Icons.shopping_cart, color: Colors.blueGrey),
