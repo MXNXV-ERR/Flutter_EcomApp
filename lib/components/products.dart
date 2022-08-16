@@ -17,12 +17,35 @@ class _ProductsState extends State<Products> {
       "pic": "assets/imgs/1.jpg",
       "oprice": 100,
       "price": 50,
+      "details": "",
     },
     {
       "name": "Product 2",
       "pic": "assets/imgs/1.jpg",
       "oprice": 100,
       "price": 50,
+      "details": "",
+    },
+    {
+      "name": "Product 3",
+      "pic": "assets/imgs/2.jpg",
+      "oprice": 100,
+      "price": 50,
+      "details": "",
+    },
+    {
+      "name": "Product 4",
+      "pic": "assets/imgs/1.jpg",
+      "oprice": 100,
+      "price": 50,
+      "details": "",
+    },
+    {
+      "name": "Product 5",
+      "pic": "assets/imgs/2.jpg",
+      "oprice": 100,
+      "price": 50,
+      "details": "",
     },
   ];
   @override
@@ -37,6 +60,7 @@ class _ProductsState extends State<Products> {
             pic: product_list[index]['pic'],
             oprice: product_list[index]['oprice'],
             price: product_list[index]['price'],
+            details: product_list[index]['details'],
           );
         });
   }
@@ -47,7 +71,9 @@ class Single_prod extends StatelessWidget {
   final pic;
   final oprice;
   final price;
-  const Single_prod({Key? key, this.name, this.pic, this.oprice, this.price})
+  final details;
+  const Single_prod(
+      {Key? key, this.name, this.pic, this.oprice, this.price, this.details})
       : super(key: key);
 
   @override
@@ -63,6 +89,7 @@ class Single_prod extends StatelessWidget {
                         price: price,
                         oprice: oprice,
                         pic: pic,
+                        details: details,
                       )))),
               child: GridTile(
                 footer: Container(

@@ -35,6 +35,7 @@ class _HomePageState extends State<HomePage> {
         dotSize: 2.0,
         dotColor: Colors.blueGrey,
         indicatorBgPadding: 1.0,
+        dotBgColor: Colors.transparent,
       ),
     );
 
@@ -83,31 +84,33 @@ class _HomePageState extends State<HomePage> {
                 onTap: () {},
                 child: ListTile(
                   title: Text("Home Page"),
-                  leading: Icon(Icons.home),
+                  leading: Icon(Icons.home, color: Colors.blueGrey),
                 )),
             InkWell(
                 onTap: () {},
                 child: ListTile(
                   title: Text("My Account"),
-                  leading: Icon(Icons.person),
+                  leading: Icon(Icons.person, color: Colors.blueGrey),
                 )),
             InkWell(
                 onTap: () {},
                 child: ListTile(
                   title: Text("My Orders"),
-                  leading: Icon(Icons.shopping_bag),
+                  leading: Icon(Icons.shopping_bag, color: Colors.blueGrey),
                 )),
             InkWell(
                 onTap: () {},
                 child: ListTile(
-                  title: Text("Categories"),
-                  leading: Icon(Icons.dashboard),
+                  title: Text("Shopping Cart"),
+                  leading: Icon(Icons.shopping_cart, color: Colors.blueGrey),
                 )),
             InkWell(
                 onTap: () {},
                 child: ListTile(
-                  title: Text("Favorites"),
-                  leading: Icon(Icons.favorite),
+                  title: Text(
+                    "Favorites",
+                  ),
+                  leading: Icon(Icons.favorite, color: Colors.blueGrey),
                 )),
             const Divider(),
             InkWell(
@@ -116,7 +119,7 @@ class _HomePageState extends State<HomePage> {
                   title: Text("Settings"),
                   leading: Icon(
                     Icons.settings,
-                    color: Colors.grey,
+                    color: Colors.blueAccent,
                   ),
                 )),
             InkWell(
