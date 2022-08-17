@@ -55,7 +55,18 @@ class _LoginState extends State<Login> {
           "id": user?.uid,
           "profilePic": user?.photoURL,
         });
+        await prefs.setString("id", user?.uid ?? "0");
+        await prefs.setString("displayname", user?.displayName ?? "0");
+        await prefs.setString("photoUrl", user?.photoURL ?? "0");
+      } else {
+        await prefs.setString("id", documents[0]['id']);
+        await prefs.setString("displayname", documents[0]['username']);
+        await prefs.setString("photoUrl", documents[0]['photoUrl']);
       }
+      Fluttertoast.showToast(msg: "Log in was successful");
+      setState(() {
+        loading = false;
+      });
     } else {}
   }
 
