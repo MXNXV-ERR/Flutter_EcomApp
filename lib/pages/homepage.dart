@@ -17,7 +17,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    Widget img_caruosel = new Container(
+    Widget imgCaruosel = Container(
       height: 200.0,
       child: Carousel(
         boxFit: BoxFit.cover,
@@ -42,8 +42,8 @@ class _HomePageState extends State<HomePage> {
         title: const Text("EcomApp"),
         actions: [
           IconButton(
-            onPressed: null,
-            icon: Icon(
+            onPressed: () {},
+            icon: const Icon(
               Icons.search,
               color: Colors.white,
             ),
@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => Cart()));
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.shopping_bag,
               color: Colors.white,
             ),
@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
         //backgroundColor: Colors.blueGrey,
         child: ListView(
           //shrinkWrap: true,
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           children: [
             UserAccountsDrawerHeader(
               accountName: Text("temp"),
@@ -151,7 +151,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
         children: [
-          img_caruosel,
+          imgCaruosel,
           Container(
               alignment: Alignment.centerLeft,
               child: Padding(
