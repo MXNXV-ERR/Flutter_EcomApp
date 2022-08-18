@@ -115,20 +115,20 @@ class _LoginState extends State<Login> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10.0),
-                    child: Container(
+                    child: SizedBox(
                       width: 275,
                       height: 65,
                       child: Padding(
                         padding: const EdgeInsets.only(top: 15.0),
                         child: ElevatedButton(
                             onPressed: validation,
-                            child: Text("Login"),
                             style: ButtonStyle(
                                 shape: MaterialStateProperty.all<
                                         RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12.0),
-                            )))),
+                            ))),
+                            child: const Text("Login")),
                       ),
                     ),
                   )
@@ -175,6 +175,10 @@ class _LoginState extends State<Login> {
         UserCredential result = await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: email, password: password);
         print(result.user!.uid);
+        if (result.user != null) {
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const HomePage()));
+        }
       } on FirebaseException catch (e) {
         print(e);
 
