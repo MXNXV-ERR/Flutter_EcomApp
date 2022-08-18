@@ -1,9 +1,11 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:ecommerce_app/pages/cart.dart';
+import 'package:ecommerce_app/pages/login.dart';
 import 'package:flutter/material.dart';
 
 import '../components/horizontallistview.dart';
 import '../components/products.dart';
+import 'package:ecommerce_app/components/auth.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -129,6 +131,19 @@ class _HomePageState extends State<HomePage> {
                   leading: Icon(
                     Icons.help,
                     color: Colors.blue,
+                  ),
+                )),
+            InkWell(
+                onTap: () async {
+                  await Auth.signOut(context: context);
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => Login()));
+                },
+                child: ListTile(
+                  title: Text("Sign Out"),
+                  leading: Icon(
+                    Icons.logout,
+                    color: Colors.redAccent,
                   ),
                 ))
           ],

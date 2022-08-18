@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecommerce_app/components/auth.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -14,77 +15,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final GoogleSignIn googleSignIn = GoogleSignIn();
-  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  late SharedPreferences prefs;
-  late bool loading;
-  bool isLoggedin = false;
-
-  @override
-  void initState() {
-    super.initState();
-    //isSignedin();
-  }
-
-  // Future handleSignin() async {
-  //  prefs = await SharedPreferences.getInstance();
-  //   setState(() {
-  //     loading = true;
-  //   });
-
-  //   GoogleSignInAccount? gUser = await googleSignIn.signIn();
-  //   GoogleSignInAuthentication? googleSignInAuthentication =
-  //       await gUser?.authentication;
-  //   final firebaseCred = GoogleAuthProvider.credential(
-  //       accessToken: googleSignInAuthentication?.accessToken,
-  //       idToken: googleSignInAuthentication?.idToken);
-  //   UserCredential userCredential =
-  //       await FirebaseAuth.instance.signInWithCredential(firebaseCred);
-  //   final user = FirebaseAuth.instance.currentUser;
-  //   if (firebaseCred != null) {
-  //     final QuerySnapshot result = await FirebaseFirestore.instance
-  //         .collection("users")
-  //         .where("id", isEqualTo: user?.uid)
-  //         .get();
-  //     final List<DocumentSnapshot> documents = result.docs;
-  //     if (documents.length == 0) {
-  //       FirebaseFirestore.instance
-  //           .collection("users")
-  //           .doc(FirebaseAuth.instance.currentUser?.uid)
-  //           .set({
-  //         "id": user?.uid,
-  //         "profilePic": user?.photoURL,
-  //       });
-  //       await prefs.setString("id", user?.uid ?? "0");
-  //       await prefs.setString("displayname", user?.displayName ?? "0");
-  //       await prefs.setString("photoUrl", user?.photoURL ?? "0");
-  //     } else {
-  //       await prefs.setString("id", documents[0]['id']);
-  //       await prefs.setString("displayname", documents[0]['username']);
-  //       await prefs.setString("photoUrl", documents[0]['photoUrl']);
-  //     }
-  //     Fluttertoast.showToast(msg: "Log in was successful");
-  //     setState(() {
-  //       loading = false;
-  //     });
-  //   } else {}
-  // }
-
-  // void isSignedin() async {
-  //   setState(() {
-  //     loading = true;
-  //   });
-  //   prefs = await SharedPreferences.getInstance();
-  //   isLoggedin = await googleSignIn.isSignedIn();
-  //   if (isLoggedin) {
-  //     Navigator.pushReplacement(
-  //         context, MaterialPageRoute(builder: (context) => HomePage()));
-  //   }
-  //   setState(() {
-  //     loading = false;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -93,8 +23,74 @@ class _LoginState extends State<Login> {
         appBar: AppBar(
           title: Text("Login"),
         ),
-        body: Text("hello"),
+        body: Column(
+          children: [
+            Text("Sign-in"),
+            FutureBuilder(
+              future: Auth.initializeFirebase(context: context),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Text('Error initializinf firebase');
+                } else if (snapshot.connectionState == ConnectionState.done) {
+                  return GoogleSignInButton();
+                }
+                return CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    Colors.orangeAccent,
+                  ),
+                );
+              },
+            )
+          ],
+        ),
       ),
+    );
+  }
+}
+
+class GoogleSignInButton extends StatefulWidget {
+  const GoogleSignInButton({Key? key}) : super(key: key);
+
+  @override
+  State<GoogleSignInButton> createState() => _GoogleSignInButtonState();
+}
+
+class _GoogleSignInButtonState extends State<GoogleSignInButton> {
+  bool _isSigningIn = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 16.0),
+      child: _isSigningIn
+          ? CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.blueAccent),
+            )
+          : OutlinedButton(
+              onPressed: () async {
+                setState(() {
+                  _isSigningIn = true;
+                });
+
+                User? user = await Auth.signinWithGoogle(context: context);
+
+                setState(() {
+                  _isSigningIn = false;
+                });
+                print(user?.displayName);
+                if (user != null) {
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const HomePage()));
+                }
+              },
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.black),
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0)))),
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 12.0),
+                child: Text("SIgin with google"),
+              )),
     );
   }
 }
