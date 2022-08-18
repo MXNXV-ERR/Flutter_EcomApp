@@ -5,7 +5,7 @@ class TxtFrmFld extends StatefulWidget {
   final String label;
   final Function onChanged;
 
-  TxtFrmFld({
+  const TxtFrmFld({
     Key? key,
     required this.onChanged,
     required this.validator,
@@ -19,7 +19,7 @@ class TxtFrmFld extends StatefulWidget {
 class _TxtFrmFldState extends State<TxtFrmFld> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 275,
       child: TextFormField(
         validator: widget.validator,
@@ -33,6 +33,7 @@ class _TxtFrmFldState extends State<TxtFrmFld> {
   }
 }
 
+// ignore: must_be_immutable
 class PwdFrmFld extends StatefulWidget {
   bool obsecureTxt;
   final String? Function(String?) validator;
@@ -55,7 +56,7 @@ class PwdFrmFld extends StatefulWidget {
 class _PwdFrmFldState extends State<PwdFrmFld> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 275,
       child: TextFormField(
         validator: widget.validator,

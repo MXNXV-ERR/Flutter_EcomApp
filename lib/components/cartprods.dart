@@ -8,7 +8,7 @@ class CartProds extends StatefulWidget {
 }
 
 class _CartProdsState extends State<CartProds> {
-  var Prod_in_cart = [
+  var prodInCart = [
     {
       "name": "Product 1",
       "pic": "assets/imgs/1.jpg",
@@ -31,34 +31,34 @@ class _CartProdsState extends State<CartProds> {
   Widget build(BuildContext context) {
     return ListView.builder(
         itemExtent: 150.0,
-        itemCount: Prod_in_cart.length,
+        itemCount: prodInCart.length,
         itemBuilder: (context, index) {
           return SingleCartProd(
-              cart_name: Prod_in_cart[index]['name'],
-              cart_color: Prod_in_cart[index]['color'],
-              cart_qty: Prod_in_cart[index]['qty'],
-              cart_size: Prod_in_cart[index]['size'],
-              cart_price: Prod_in_cart[index]['price'],
-              cart_pic: Prod_in_cart[index]['pic']);
+              cartName: prodInCart[index]['name'],
+              cartColor: prodInCart[index]['color'],
+              cartQty: prodInCart[index]['qty'],
+              cartSize: prodInCart[index]['size'],
+              cartPrice: prodInCart[index]['price'],
+              cartPic: prodInCart[index]['pic']);
         });
   }
 }
 
 class SingleCartProd extends StatelessWidget {
-  final cart_name;
-  final cart_pic;
-  final cart_price;
-  final cart_size;
-  final cart_color;
-  final cart_qty;
+  final cartName;
+  final cartPic;
+  final cartPrice;
+  final cartSize;
+  final cartColor;
+  final cartQty;
   const SingleCartProd(
       {Key? key,
-      this.cart_name,
-      this.cart_pic,
-      this.cart_price,
-      this.cart_size,
-      this.cart_color,
-      this.cart_qty})
+      this.cartName,
+      this.cartPic,
+      this.cartPrice,
+      this.cartSize,
+      this.cartColor,
+      this.cartQty})
       : super(key: key);
 
   @override
@@ -67,45 +67,45 @@ class SingleCartProd extends StatelessWidget {
       child: ListTile(
         dense: true,
         leading: Image.asset(
-          cart_pic,
+          cartPic,
           width: 120.0,
           height: 120.0,
         ),
         title: Text(
-          cart_name,
+          cartName,
         ),
         subtitle: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: Text("Size:"),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    cart_size,
-                    style: TextStyle(color: Colors.blueGrey),
+                    cartSize,
+                    style: const TextStyle(color: Colors.blueGrey),
                   ),
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text("Color:"),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(cart_color,
-                      style: TextStyle(color: Colors.blueGrey)),
+                  child: Text(cartColor,
+                      style: const TextStyle(color: Colors.blueGrey)),
                 ),
               ],
             ),
             Container(
               alignment: Alignment.topLeft,
               child: Text(
-                "\$${cart_price}",
-                style: TextStyle(
+                "\$$cartPrice",
+                style: const TextStyle(
                     color: Colors.blueGrey,
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold),
@@ -114,11 +114,11 @@ class SingleCartProd extends StatelessWidget {
             Container(
               alignment: Alignment.topLeft,
               child: Padding(
-                padding: EdgeInsets.only(top: 15.0),
+                padding: const EdgeInsets.only(top: 15.0),
                 child: Row(
                   children: [
                     IconButton(
-                      icon: Icon(Icons.remove),
+                      icon: const Icon(Icons.remove),
                       onPressed: () {},
                     ),
                     Container(
@@ -126,13 +126,13 @@ class SingleCartProd extends StatelessWidget {
                         height: 25.0,
                         decoration: BoxDecoration(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(10.0)),
+                                const BorderRadius.all(Radius.circular(10.0)),
                             border: Border.all(
                               color: Colors.blueGrey,
                             )),
-                        child: Center(child: Text("${cart_qty}"))),
+                        child: Center(child: Text("$cartQty"))),
                     IconButton(
-                      icon: Icon(Icons.add),
+                      icon: const Icon(Icons.add),
                       onPressed: () {},
                     ),
                   ],

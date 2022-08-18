@@ -41,38 +41,35 @@ class _Product_DetailsState extends State<Product_Details> {
       ),
       body: ListView(
         children: [
-          Container(
+          SizedBox(
             height: 300.0,
             child: GridTile(
-              child: Container(
-                //color: Colors.white,
-                child: Image.asset(widget.pic),
-              ),
               footer: Container(
                   color: Colors.white70,
                   child: ListTile(
                     leading: Text(
                       widget.name,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 16.0),
                     ),
                     title: Row(
                       children: [
                         Expanded(
                             child: Text("\$${widget.oprice}",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.grey,
                                   decoration: TextDecoration.lineThrough,
                                 ))),
                         Expanded(
                             child: Text(
                           "\$${widget.price}",
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold, color: Colors.green),
                         ))
                       ],
                     ),
                   )),
+              child: Image.asset(widget.pic),
             ),
           ),
           Row(
@@ -193,7 +190,7 @@ class _Product_DetailsState extends State<Product_Details> {
             ],
           ),
           const Divider(),
-          ListTile(
+          const ListTile(
             title: Text("Product details"),
             subtitle: Text(
                 "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged"),
@@ -241,11 +238,11 @@ class _Product_DetailsState extends State<Product_Details> {
             ],
           ),
           const Divider(),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
             child: Text("Similar Producs"),
           ),
-          Container(
+          const SizedBox(
             height: 360.0,
             child: Similar_Prods(),
           ),

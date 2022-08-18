@@ -1,10 +1,8 @@
+import 'dart:html';
+
 import 'package:ecommerce_app/pages/homepage.dart';
 import 'package:flutter/material.dart';
-//import 'package:shared_preferences/shared_preferences.dart';
-//import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-//import 'package:google_sign_in/google_sign_in.dart';
-//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/components/auth.dart';
 import 'package:ecommerce_app/components/formfeild.dart';
 
@@ -32,136 +30,157 @@ class _LoginState extends State<Login> {
       //scaffoldMessengerKey: _scaffoldKey,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        backgroundColor: Colors.black45,
         key: _scaffoldKey,
         // appBar: AppBar(
         //   title: const Text("Login"),
         // ),
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              //===============================Logo Holder=====================
-              Padding(
-                padding: EdgeInsets.only(bottom: 75.0),
-                child: SizedBox(
-                  height: 120.0,
-                  width: 120.0,
-                  child: Container(
-                    color: Colors.amber,
-                    child: Center(child: Text("Logo holder")),
+          child: Stack(children: [
+            //=================Backgroung img=====================
+
+            //TODO::add bg img
+
+            Container(
+                height: double.infinity,
+                width: double.infinity,
+                child: Image.asset(
+                  'bgimg',
+                  fit: BoxFit.cover,
+                )),
+            //=======Opacity for bg img=============
+            Container(
+              height: double.infinity,
+              width: double.infinity,
+              color: Colors.white,
+            ),
+
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                //===============================Logo Holder=====================
+                Padding(
+                  padding: EdgeInsets.only(bottom: 75.0),
+                  child: SizedBox(
+                    height: 120.0,
+                    width: 120.0,
+                    child: Container(
+                      color: Colors.amber,
+                      child: Center(child: Text("Logo holder")),
+                    ),
                   ),
                 ),
-              ),
-              //===============Email - password login====================
-              Form(
-                //sdfgautovalidateMode: AutovalidateMode.onUserInteraction,
-                //autovalidateMode: AutovalidateMode.always,
-                key: _formkey,
-                child: Column(//direction: Axis.vertical,
-                    children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 5.0),
-                    child: TxtFrmFld(
+                //===============Email - password login====================
+                Form(
+                  //sdfgautovalidateMode: AutovalidateMode.onUserInteraction,
+                  //autovalidateMode: AutovalidateMode.always,
+                  key: _formkey,
+                  child: Column(//direction: Axis.vertical,
+                      children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5.0),
+                      child: TxtFrmFld(
+                          onChanged: (value) {
+                            validation();
+                            email = value;
+                            setState(() {
+                              validation();
+                              email = value.toString().trim();
+                              //print("this" + email);
+                            });
+                          },
+                          validator: (value) {
+                            if (value == "") {
+                              return "Please fill the email";
+                            } else if (!regExp.hasMatch(value!)) {
+                              return "Email is Invalid";
+                            }
+                            setState(() {
+                              email = value.toString().trim();
+                            });
+                            return null;
+                          },
+                          label: "Email"),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5.0),
+                      child: PwdFrmFld(
                         onChanged: (value) {
-                          validation();
-                          email = value;
                           setState(() {
                             validation();
-                            email = value.toString().trim();
-                            print("this" + email);
+                            password = value;
                           });
                         },
+                        obsecureTxt: true,
                         validator: (value) {
                           if (value == "") {
-                            return "Please fill the email";
-                          } else if (!regExp.hasMatch(value!)) {
-                            return "Email is Invalid";
+                            return 'Please enter the password';
+                          } else if (value!.length < 8) {
+                            return "Password too short";
                           }
                           setState(() {
-                            email = value.toString().trim();
+                            password = value.toString().trim();
                           });
                           return null;
                         },
-                        label: "Email"),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 5.0),
-                    child: PwdFrmFld(
-                      onChanged: (value) {
-                        setState(() {
-                          validation();
-                          password = value;
-                        });
-                      },
-                      obsecureTxt: true,
-                      validator: (value) {
-                        if (value == "") {
-                          return 'Please enter the password';
-                        } else if (value!.length < 8) {
-                          return "Password too short";
-                        }
-                        setState(() {
-                          password = value.toString().trim();
-                        });
-                        return null;
-                      },
-                      label: 'Password',
-                      onTap: () {
-                        setState(() {
-                          obsecureTxt = !obsecureTxt;
-                        });
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10.0),
-                    child: SizedBox(
-                      width: 275,
-                      height: 65,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 15.0),
-                        child: ElevatedButton(
-                            onPressed: validation,
-                            style: ButtonStyle(
-                                shape: MaterialStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                            ))),
-                            child: const Text("Login")),
+                        label: 'Password',
+                        onTap: () {
+                          setState(() {
+                            obsecureTxt = !obsecureTxt;
+                          });
+                        },
                       ),
                     ),
-                  )
-                ]),
-              ),
-
-              const Divider(),
-
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 15.0),
-                child: Text(
-                  "Other Sign-in Options",
-                  style: TextStyle(color: Colors.black45),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10.0),
+                      child: SizedBox(
+                        width: 275,
+                        height: 65,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 15.0),
+                          child: ElevatedButton(
+                              onPressed: validation,
+                              style: ButtonStyle(
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                              ))),
+                              child: const Text("Login")),
+                        ),
+                      ),
+                    )
+                  ]),
                 ),
-              ),
-              //Google Sign in
-              FutureBuilder(
-                future: Auth.initializeFirebase(context: context),
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return const Text('Error initializing firebase');
-                  } else if (snapshot.connectionState == ConnectionState.done) {
-                    return const GoogleSignInButton();
-                  }
-                  return const CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      Colors.orangeAccent,
-                    ),
-                  );
-                },
-              )
-            ],
-          ),
+                const Divider(),
+
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 15.0),
+                  child: Text(
+                    "Other Sign-in Options",
+                    style: TextStyle(color: Colors.black45),
+                  ),
+                ),
+                //Google Sign in
+                FutureBuilder(
+                  future: Auth.initializeFirebase(context: context),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return const Text('Error initializing firebase');
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.done) {
+                      return const GoogleSignInButton();
+                    }
+                    return const CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        Colors.orangeAccent,
+                      ),
+                    );
+                  },
+                )
+              ],
+            ),
+          ]),
         ),
       ),
     );
