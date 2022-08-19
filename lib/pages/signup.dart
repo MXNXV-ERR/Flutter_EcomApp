@@ -30,9 +30,9 @@ class _SignUpState extends State<SignUp> {
       home: Scaffold(
         backgroundColor: Colors.black45,
         key: _scaffoldKey,
-        // appBar: AppBar(
-        //   title: const Text("Login"),
-        // ),
+        appBar: AppBar(
+          title: const Text("Login"),
+        ),
         body: Center(
           child: Stack(children: [
             //=================Backgroung img=====================
