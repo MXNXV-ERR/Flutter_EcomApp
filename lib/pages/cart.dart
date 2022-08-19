@@ -26,12 +26,12 @@ class _CartState extends State<Cart> {
           ),
         ],
       ),
-      body: CartProds(),
+      body: const CartProds(),
       bottomNavigationBar: Container(
         color: Colors.white,
         child: Row(
           children: [
-            Expanded(
+            const Expanded(
                 child: ListTile(
               title: Text("Total:"),
               subtitle: Text("\$230"),
@@ -40,7 +40,7 @@ class _CartState extends State<Cart> {
                 child: MaterialButton(
                     color: Colors.blueGrey,
                     onPressed: () {},
-                    child: Text(
+                    child: const Text(
                       "Checkout",
                       style: TextStyle(
                         color: Colors.white,

@@ -18,6 +18,7 @@ class _LoginState extends State<Login> {
   final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   //late final ScaffoldMessengerState? _scaffold = _scaffoldKey.currentState;
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  TextEditingController pwdController = TextEditingController();
 
   String email = "";
   String password = "";
@@ -107,6 +108,7 @@ class _LoginState extends State<Login> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5.0),
                       child: PwdFrmFld(
+                        controller: pwdController,
                         onChanged: (value) {
                           setState(() {
                             validation();
@@ -219,8 +221,10 @@ class _LoginState extends State<Login> {
             .signInWithEmailAndPassword(email: email, password: password);
         print(result.user!.uid);
         if (result.user != null) {
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const HomePage()));
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => HomePage(
+                    user: result.user,
+                  )));
         }
       } on FirebaseException catch (e) {
         print(e);
@@ -276,7 +280,9 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                       });
                       if (user != null) {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const HomePage()));
+                            builder: (context) => HomePage(
+                                  user: user,
+                                )));
                       }
                     },
                     icon: Image.asset(

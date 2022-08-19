@@ -1,6 +1,10 @@
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:carousel_pro/carousel_pro.dart';
+//above is not null should be replaced with something null safe
+
 import 'package:ecommerce_app/pages/cart.dart';
 import 'package:ecommerce_app/pages/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../components/horizontallistview.dart';
@@ -8,7 +12,8 @@ import '../components/products.dart';
 import 'package:ecommerce_app/components/auth.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final User? user;
+  const HomePage({Key? key, required this.user}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -17,17 +22,17 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    Widget imgCaruosel = Container(
+    Widget imgCaruosel = SizedBox(
       height: 200.0,
       child: Carousel(
         boxFit: BoxFit.cover,
-        images: [
+        images: const [
           AssetImage('assets/imgs/1.jpg'),
           AssetImage('assets/imgs/2.jpg')
         ],
         autoplay: false,
         animationCurve: Curves.fastOutSlowIn,
-        animationDuration: Duration(milliseconds: 1000),
+        animationDuration: const Duration(milliseconds: 1000),
         dotSize: 2.0,
         dotColor: Colors.blueGrey,
         indicatorBgPadding: 1.0,
@@ -67,15 +72,17 @@ class _HomePageState extends State<HomePage> {
           physics: const BouncingScrollPhysics(),
           children: [
             UserAccountsDrawerHeader(
-              accountName: Text("temp"),
-              accountEmail: Text("Temp@gmail.com"),
+              accountName: Text(widget.user?.displayName ?? "????"),
+              accountEmail: Text(widget.user?.email ?? "????"),
               currentAccountPicture: GestureDetector(
                 child: CircleAvatar(
                   backgroundColor: Colors.blueGrey,
-                  child: Icon(Icons.person),
+                  child: Image(
+                      image: NetworkImage(widget.user?.photoURL ??
+                          "https://drive.google.com/file/d/1hyCMOYVMDEf4PYsIi40W0nkEON-YaLPG/view?usp=sharing")),
                 ),
               ),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.blueGrey,
               ),
             ),
@@ -161,12 +168,14 @@ class _HomePageState extends State<HomePage> {
           const HorizontalList(),
           Container(
               alignment: Alignment.centerLeft,
-              child: Padding(
+              child: const Padding(
                 padding: EdgeInsets.all(15.0),
                 child: Text("Recent products"),
               )),
           Flexible(
-            child: Products(),
+            child: Products(
+              user: widget.user,
+            ),
           )
         ],
       ),

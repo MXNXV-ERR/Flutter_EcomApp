@@ -43,13 +43,15 @@ class PwdFrmFld extends StatefulWidget {
   final String label;
   final void Function() onTap;
   final Function onChanged;
+  final TextEditingController controller;
   PwdFrmFld(
       {Key? key,
       required this.onChanged,
       required this.obsecureTxt,
       required this.validator,
       required this.label,
-      required this.onTap})
+      required this.onTap,
+      required this.controller})
       : super(key: key);
 
   @override
@@ -62,6 +64,7 @@ class _PwdFrmFldState extends State<PwdFrmFld> {
     return SizedBox(
       width: 300,
       child: TextFormField(
+        controller: widget.controller,
         validator: widget.validator,
         obscureText: widget.obsecureTxt,
         decoration: InputDecoration(

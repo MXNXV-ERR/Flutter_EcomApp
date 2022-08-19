@@ -15,9 +15,12 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  TextEditingController pwdController = TextEditingController();
+  TextEditingController cpwdController = TextEditingController();
   String email = "";
   String password = "";
   String name = "";
+  String groupValue = "Male";
   String p =
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
   late RegExp regExp = RegExp(p);
@@ -25,11 +28,11 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      //scaffoldMessengerKey: _scaffoldKey,
+      scaffoldMessengerKey: _scaffoldKey,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.black45,
-        key: _scaffoldKey,
+        // key: _scaffoldKey,
         // appBar: AppBar(
         //   title: const Text("Login"),
         // ),
@@ -71,8 +74,6 @@ class _SignUpState extends State<SignUp> {
                 ),
                 //===============Email - password login====================
                 Form(
-                  //sdfgautovalidateMode: AutovalidateMode.onUserInteraction,
-                  //autovalidateMode: AutovalidateMode.always,
                   key: _formkey,
                   child: Column(//direction: Axis.vertical,
                       children: [
@@ -80,11 +81,28 @@ class _SignUpState extends State<SignUp> {
                       padding: EdgeInsets.symmetric(vertical: 5.0),
                       child: TxtFrmFld(
                           onChanged: () {},
-                          validator: (p0) {
-                            return null;
+                          validator: (value) {
+                            if (value!.length < 5) {
+                              return "Please enter full name";
+                            }
                           },
-                          label: "Name",
+                          label: "Full Name",
                           icon: Icons.person),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Radio(
+                            value: "Male",
+                            groupValue: groupValue,
+                            onChanged: (e) => valueChanged(e)),
+                        const Text("Male    "),
+                        Radio(
+                            value: "Female",
+                            groupValue: groupValue,
+                            onChanged: (e) => valueChanged(e)),
+                        const Text("Female"),
+                      ],
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5.0),
@@ -115,6 +133,7 @@ class _SignUpState extends State<SignUp> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5.0),
                       child: PwdFrmFld(
+                        controller: pwdController,
                         onChanged: (value) {
                           setState(() {
                             validation();
@@ -142,12 +161,19 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 5.0),
+                      padding: const EdgeInsets.symmetric(vertical: 5.0),
                       child: PwdFrmFld(
+                          controller: cpwdController,
                           onChanged: () {},
                           obsecureTxt: true,
-                          validator: (p0) {
-                            return null;
+                          validator: (value) {
+                            if (value == null) {
+                              return "This feild cannot be empty";
+                            } else if (pwdController.text != value) {
+                              return "The passwords do not match";
+                            } else {
+                              return "Something Went Wrong";
+                            }
                           },
                           label: "Confirm password",
                           onTap: () {}),
@@ -236,8 +262,8 @@ class _SignUpState extends State<SignUp> {
             .signInWithEmailAndPassword(email: email, password: password);
         print(result.user!.uid);
         if (result.user != null) {
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const HomePage()));
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => HomePage(user: result.user)));
         }
       } on FirebaseException catch (e) {
         print(e);
@@ -253,6 +279,16 @@ class _SignUpState extends State<SignUp> {
 
   void _showSnackBar(String content) {
     _scaffoldKey.currentState?.showSnackBar(SnackBar(content: Text(content)));
+  }
+
+  valueChanged(Object? e) {
+    setState(() {
+      if (e == "Male") {
+        groupValue = e.toString();
+      } else if (e == "Female") {
+        groupValue = e.toString();
+      }
+    });
   }
 }
 
@@ -289,7 +325,9 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                       });
                       if (user != null) {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const HomePage()));
+                            builder: (context) => HomePage(
+                                  user: user,
+                                )));
                       }
                     },
                     icon: Image.asset(

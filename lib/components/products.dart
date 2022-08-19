@@ -1,10 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+
 import 'package:ecommerce_app/pages/productdetails.dart';
 
 class Products extends StatefulWidget {
-  const Products({Key? key}) : super(key: key);
+  final User? user;
+  const Products({Key? key, required this.user}) : super(key: key);
 
   @override
   State<Products> createState() => _ProductsState();
@@ -48,6 +49,7 @@ class _ProductsState extends State<Products> {
       "details": "",
     },
   ];
+  //late User user;
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
@@ -63,6 +65,7 @@ class _ProductsState extends State<Products> {
               oprice: product_list[index]['oprice'],
               price: product_list[index]['price'],
               details: product_list[index]['details'],
+              user: widget.user,
             ),
           );
         });
@@ -75,8 +78,15 @@ class Single_prod extends StatelessWidget {
   final oprice;
   final price;
   final details;
+  final User? user;
   const Single_prod(
-      {Key? key, this.name, this.pic, this.oprice, this.price, this.details})
+      {Key? key,
+      this.name,
+      this.pic,
+      this.oprice,
+      this.price,
+      this.details,
+      required this.user})
       : super(key: key);
 
   @override
@@ -88,6 +98,7 @@ class Single_prod extends StatelessWidget {
             child: InkWell(
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
                   builder: ((context) => Product_Details(
+                        user: user,
                         name: name,
                         price: price,
                         oprice: oprice,

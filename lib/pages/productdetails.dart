@@ -1,16 +1,24 @@
 import 'package:ecommerce_app/pages/homepage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 //import 'package:ecommerce_app/main.dart';
 import 'package:ecommerce_app/components/products.dart';
 
 class Product_Details extends StatefulWidget {
+  final User? user;
   final name;
   final pic;
   final oprice;
   final price;
   final details;
   const Product_Details(
-      {Key? key, this.name, this.pic, this.oprice, this.price, this.details})
+      {Key? key,
+      this.name,
+      this.pic,
+      this.oprice,
+      this.price,
+      this.details,
+      required this.user})
       : super(key: key);
 
   @override
@@ -26,7 +34,11 @@ class _Product_DetailsState extends State<Product_Details> {
         title: InkWell(
             onTap: () {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => HomePage()));
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HomePage(
+                            user: widget.user,
+                          )));
             },
             child: const Text("EcomApp")),
         actions: const [
@@ -297,6 +309,7 @@ class _Similar_ProdsState extends State<Similar_Prods> {
       "details": "",
     },
   ];
+  late User user;
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
@@ -305,6 +318,7 @@ class _Similar_ProdsState extends State<Similar_Prods> {
             SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemBuilder: (BuildContext context, int index) {
           return Single_prod(
+            user: user,
             name: product_list[index]['name'],
             pic: product_list[index]['pic'],
             oprice: product_list[index]['oprice'],
