@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:ecommerce_app/pages/homepage.dart';
 import 'package:ecommerce_app/pages/signup.dart';
 import 'package:flutter/material.dart';
