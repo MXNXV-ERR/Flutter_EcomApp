@@ -32,7 +32,6 @@ class _LoginState extends State<Login> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.black45,
-        //key: _scaffoldKey,
         // appBar: AppBar(
         //   title: const Text("Login"),
         // ),
@@ -62,7 +61,7 @@ class _LoginState extends State<Login> {
               children: [
                 //===============================Logo Holder=====================
                 Padding(
-                  padding: EdgeInsets.only(bottom: 75.0),
+                  padding: EdgeInsets.only(bottom: 20.0),
                   child: SizedBox(
                     height: 120.0,
                     width: 120.0,

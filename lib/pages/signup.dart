@@ -13,7 +13,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   String email = "";
   String password = "";
@@ -30,9 +30,9 @@ class _SignUpState extends State<SignUp> {
       home: Scaffold(
         backgroundColor: Colors.black45,
         key: _scaffoldKey,
-        appBar: AppBar(
-          title: const Text("Login"),
-        ),
+        // appBar: AppBar(
+        //   title: const Text("Login"),
+        // ),
         body: Center(
           child: Stack(children: [
             //=================Backgroung img=====================
@@ -59,7 +59,7 @@ class _SignUpState extends State<SignUp> {
               children: [
                 //===============================Logo Holder=====================
                 Padding(
-                  padding: EdgeInsets.only(bottom: 75.0),
+                  padding: EdgeInsets.only(bottom: 20.0),
                   child: SizedBox(
                     height: 120.0,
                     width: 120.0,
