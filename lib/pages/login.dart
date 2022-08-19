@@ -15,7 +15,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   //late final ScaffoldMessengerState? _scaffold = _scaffoldKey.currentState;
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
@@ -28,11 +28,11 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      //scaffoldMessengerKey: _scaffoldKey,
+      scaffoldMessengerKey: _scaffoldKey,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.black45,
-        key: _scaffoldKey,
+        //key: _scaffoldKey,
         // appBar: AppBar(
         //   title: const Text("Login"),
         // ),
@@ -239,6 +239,10 @@ class _LoginState extends State<Login> {
     _scaffoldKey.currentState?.showSnackBar(SnackBar(content: Text(content)));
   }
 }
+
+void showbanner(dynamic context) =>
+    ScaffoldMessenger.of(context).showMaterialBanner(
+        const MaterialBanner(content: Text("hell"), actions: []));
 
 class GoogleSignInButton extends StatefulWidget {
   const GoogleSignInButton({Key? key}) : super(key: key);
