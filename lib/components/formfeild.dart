@@ -4,12 +4,14 @@ class TxtFrmFld extends StatefulWidget {
   final String? Function(String?) validator;
   final String label;
   final Function onChanged;
+  final IconData icon;
 
   const TxtFrmFld({
     Key? key,
     required this.onChanged,
     required this.validator,
     required this.label,
+    required this.icon,
   }) : super(key: key);
 
   @override
@@ -20,10 +22,11 @@ class _TxtFrmFldState extends State<TxtFrmFld> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 275,
+      width: 300,
       child: TextFormField(
         validator: widget.validator,
         decoration: InputDecoration(
+          icon: Icon(widget.icon),
           label: Text(widget.label),
           floatingLabelBehavior: FloatingLabelBehavior.auto,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -57,13 +60,14 @@ class _PwdFrmFldState extends State<PwdFrmFld> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 275,
+      width: 300,
       child: TextFormField(
         validator: widget.validator,
         obscureText: widget.obsecureTxt,
         decoration: InputDecoration(
+          icon: const Icon(Icons.lock_outline),
           //contentPadding: const EdgeInsets.only(top: 20.0),
-          label: const Text('Password'),
+          label: Text(widget.label),
           floatingLabelBehavior: FloatingLabelBehavior.auto,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
           suffixIcon: GestureDetector(

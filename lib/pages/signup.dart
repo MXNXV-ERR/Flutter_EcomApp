@@ -1,26 +1,23 @@
-import 'dart:html';
-
-import 'package:ecommerce_app/pages/homepage.dart';
-import 'package:ecommerce_app/pages/signup.dart';
+import 'package:ecommerce_app/pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ecommerce_app/components/auth.dart';
 import 'package:ecommerce_app/components/formfeild.dart';
+import 'package:ecommerce_app/pages/homepage.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class SignUp extends StatefulWidget {
+  const SignUp({Key? key}) : super(key: key);
 
   @override
-  State<Login> createState() => _LoginState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _LoginState extends State<Login> {
+class _SignUpState extends State<SignUp> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  //late final ScaffoldMessengerState? _scaffold = _scaffoldKey.currentState;
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-
   String email = "";
   String password = "";
+  String name = "";
   String p =
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
   late RegExp regExp = RegExp(p);
@@ -48,7 +45,7 @@ class _LoginState extends State<Login> {
               // child: Image.asset(
               //   'bgimg',
               //   fit: BoxFit.cover,
-              // )
+              //)
             ),
             //=======Opacity for bg img=============
             Container(
@@ -79,6 +76,16 @@ class _LoginState extends State<Login> {
                   key: _formkey,
                   child: Column(//direction: Axis.vertical,
                       children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 5.0),
+                      child: TxtFrmFld(
+                          onChanged: () {},
+                          validator: (p0) {
+                            return null;
+                          },
+                          label: "Name",
+                          icon: Icons.person),
+                    ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5.0),
                       child: TxtFrmFld(
@@ -135,6 +142,17 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     Padding(
+                      padding: EdgeInsets.symmetric(vertical: 5.0),
+                      child: PwdFrmFld(
+                          onChanged: () {},
+                          obsecureTxt: true,
+                          validator: (p0) {
+                            return null;
+                          },
+                          label: "Confirm password",
+                          onTap: () {}),
+                    ),
+                    Padding(
                       padding: const EdgeInsets.only(bottom: 10.0),
                       child: SizedBox(
                         width: 300,
@@ -155,15 +173,14 @@ class _LoginState extends State<Login> {
                     )
                   ]),
                 ),
-                //sign up options
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Don`t have an account? "),
+                    const Text("I already have an account! "),
                     InkWell(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const SignUp()));
+                            builder: (context) => const Login()));
                       },
                       child: const Text(
                         "Click here",
@@ -172,7 +189,7 @@ class _LoginState extends State<Login> {
                             decoration: TextDecoration.underline),
                       ),
                     ),
-                    const Text(" to sign up"),
+                    const Text(" to sign in"),
                   ],
                 ),
 
@@ -195,7 +212,6 @@ class _LoginState extends State<Login> {
                         ConnectionState.done) {
                       return const GoogleSignInButton();
                     }
-
                     return const CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(
                         Colors.orangeAccent,
@@ -213,8 +229,8 @@ class _LoginState extends State<Login> {
 
   Future<void> validation() async {
     FocusManager.instance.primaryFocus?.unfocus();
-    final FormState? _form = _formkey.currentState;
-    if (_form!.validate()) {
+    final FormState? form = _formkey.currentState;
+    if (form!.validate()) {
       try {
         UserCredential result = await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: email, password: password);
