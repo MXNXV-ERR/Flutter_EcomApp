@@ -1,0 +1,22 @@
+{
+  "name": "ecommerce_app",
+  "version": "1.0.0",
+  "description": "try",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MXNXV-ERR/Flutter_EcomApp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MXNXV-ERR/Flutter_EcomApp/issues"
+  },
+  "homepage": "https://github.com/MXNXV-ERR/Flutter_EcomApp#readme"
+}
