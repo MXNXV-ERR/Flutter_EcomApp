@@ -53,6 +53,7 @@ class Auth {
         }
       }
     }
+
     return user;
   }
 
@@ -94,4 +95,11 @@ class Auth {
           Auth.customSnackBAr(content: 'Error Signing out.Try Again...'));
     }
   }
+
+  // static Future<User?> signinWithEmailAndPwd({required BuildContext context,required GlobalKey<FormState> formkey}){
+  //   FormState? formState =formkey.currentState;
+  //   if(formState?.validate()??false){
+  //     User user =await fire
+  //   }
+  // }
 }

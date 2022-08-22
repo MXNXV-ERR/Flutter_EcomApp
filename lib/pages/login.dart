@@ -241,10 +241,6 @@ class _LoginState extends State<Login> {
   }
 }
 
-void showbanner(dynamic context) =>
-    ScaffoldMessenger.of(context).showMaterialBanner(
-        const MaterialBanner(content: Text("hell"), actions: []));
-
 class GoogleSignInButton extends StatefulWidget {
   const GoogleSignInButton({Key? key}) : super(key: key);
 
