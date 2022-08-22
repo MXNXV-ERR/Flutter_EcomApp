@@ -5,6 +5,7 @@ class TxtFrmFld extends StatefulWidget {
   final String label;
   final Function onChanged;
   final IconData icon;
+  final TextEditingController controller;
 
   const TxtFrmFld({
     Key? key,
@@ -12,6 +13,7 @@ class TxtFrmFld extends StatefulWidget {
     required this.validator,
     required this.label,
     required this.icon,
+    required this.controller,
   }) : super(key: key);
 
   @override
@@ -24,6 +26,7 @@ class _TxtFrmFldState extends State<TxtFrmFld> {
     return SizedBox(
       width: 300,
       child: TextFormField(
+        controller: widget.controller,
         validator: widget.validator,
         decoration: InputDecoration(
           icon: Icon(widget.icon),

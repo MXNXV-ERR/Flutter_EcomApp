@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ecommerce_app/components/auth.dart';
 import 'package:ecommerce_app/components/formfeild.dart';
 import 'package:ecommerce_app/pages/homepage.dart';
+import 'package:ecommerce_app/db/user.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -15,8 +16,11 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController pwdController = TextEditingController();
   TextEditingController cpwdController = TextEditingController();
+  UserServices usrServ = UserServices();
   String email = "";
   String password = "";
   String name = "";
@@ -80,8 +84,9 @@ class _SignUpState extends State<SignUp> {
                       child: Column(//direction: Axis.vertical,
                           children: [
                         Padding(
-                          padding: EdgeInsets.symmetric(vertical: 5.0),
+                          padding: const EdgeInsets.symmetric(vertical: 5.0),
                           child: TxtFrmFld(
+                              controller: nameController,
                               onChanged: () {},
                               validator: (value) {
                                 if (value!.length < 5) {
@@ -109,6 +114,7 @@ class _SignUpState extends State<SignUp> {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 5.0),
                           child: TxtFrmFld(
+                              controller: emailController,
                               icon: Icons.email,
                               onChanged: (value) {
                                 validation();
@@ -257,11 +263,18 @@ class _SignUpState extends State<SignUp> {
 
   Future<void> validation() async {
     FocusManager.instance.primaryFocus?.unfocus();
-    final FormState? _form = _formkey.currentState;
-    if (_form!.validate()) {
+    final FormState? form = _formkey.currentState;
+    if (form!.validate()) {
       try {
         UserCredential result = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
+        Map value = {
+          "username": nameController.text,
+          "email": result.user?.email,
+          "uid": result.user?.uid,
+          "gender": groupValue,
+        };
+        usrServ.createUsr(result.user?.uid, value);
         Navigator.of(context).pushReplacement(MaterialPageRoute(
             builder: (context) => HomePage(
                   user: result.user,

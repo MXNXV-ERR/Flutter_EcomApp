@@ -17,6 +17,7 @@ class _LoginState extends State<Login> {
   //late final ScaffoldMessengerState? _scaffold = _scaffoldKey.currentState;
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   TextEditingController pwdController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
 
   String email = "";
   String password = "";
@@ -80,6 +81,7 @@ class _LoginState extends State<Login> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5.0),
                       child: TxtFrmFld(
+                          controller: emailController,
                           icon: Icons.email,
                           onChanged: (value) {
                             validation();
