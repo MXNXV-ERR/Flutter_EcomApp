@@ -18,7 +18,7 @@ jobs:
         with:
           java-version: '17.x'
       - run: >-
-          sudo snap install flutter --classic && flutter channel beta && flutter pub get && flutter test && flutter build apk -debug --split-per-abi && flutter
+          sudo snap install flutter --classic && flutter channel beta && flutter pub get && flutter build apk -debug --split-per-abi  --no-sound-null-safety && flutter
           config --enable-web && flutter build web --web-renderer html --release --no-sound-null-safety
       - name: "Push to release"
         uses: ncipollo/release-action@v1
