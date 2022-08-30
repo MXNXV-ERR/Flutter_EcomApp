@@ -5,17 +5,17 @@ class HorizontalList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 40.0,
       child: ListView(
         scrollDirection: Axis.horizontal,
-        children: [
-          Category(image_loc: "assets/imgs/1.jpg", img_cc: "CAT 1"),
-          Category(image_loc: "assets/imgs/1.jpg", img_cc: "CAT 2"),
-          Category(image_loc: "assets/imgs/1.jpg", img_cc: "CAT 3"),
-          Category(image_loc: "assets/imgs/1.jpg", img_cc: "CAT 4"),
-          Category(image_loc: "assets/imgs/1.jpg", img_cc: "CAT 5"),
-          Category(image_loc: "assets/imgs/1.jpg", img_cc: "CAT 6")
+        children: const [
+          Category(imageLoc: "assets/imgs/1.jpg", imgCc: "CAT 1"),
+          Category(imageLoc: "assets/imgs/1.jpg", imgCc: "CAT 2"),
+          Category(imageLoc: "assets/imgs/1.jpg", imgCc: "CAT 3"),
+          Category(imageLoc: "assets/imgs/1.jpg", imgCc: "CAT 4"),
+          Category(imageLoc: "assets/imgs/1.jpg", imgCc: "CAT 5"),
+          Category(imageLoc: "assets/imgs/1.jpg", imgCc: "CAT 6")
         ],
       ),
     );
@@ -23,15 +23,15 @@ class HorizontalList extends StatelessWidget {
 }
 
 class Category extends StatelessWidget {
-  const Category({Key? key, required this.image_loc, required this.img_cc})
+  const Category({Key? key, required this.imageLoc, required this.imgCc})
       : super(key: key);
-  final String image_loc;
-  final String img_cc;
+  final String imageLoc;
+  final String imgCc;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(2.0),
+      padding: const EdgeInsets.all(2.0),
       child: InkWell(
         onTap: null,
         child: Container(
@@ -39,10 +39,10 @@ class Category extends StatelessWidget {
           height: 200.0,
           child: ListTile(
             title: Image.asset(
-              image_loc,
+              imageLoc,
             ),
             subtitle:
-                Container(alignment: Alignment.topCenter, child: Text(img_cc)),
+                Container(alignment: Alignment.topCenter, child: Text(imgCc)),
           ),
         ),
       ),

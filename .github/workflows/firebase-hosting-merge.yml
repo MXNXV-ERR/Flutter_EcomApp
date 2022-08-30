@@ -6,17 +6,27 @@ name: Deploy to Firebase Hosting on merge
   push:
     branches:
       - main
+      - master
+      - develop
 jobs:
   build_and_deploy:
+    name: "Build & Release"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: action/setup-java@v1
+        with:
+          java-version: '17.x'
       - run: >-
-          sudo snap install flutter --classic && flutter channel beta && flutter
+          sudo snap install flutter --classic && flutter channel beta && flutter pub get && flutter test && flutter build apk -debug --split-per-abi && flutter
           config --enable-web && flutter build web --web-renderer html --release --no-sound-null-safety
+      - name: "Push to release"
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "build/app/outputs/apk/debug/*"
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ECOMMERCEAPP_11EB2 }}'
           channelId: live
-          projectId: ecommerceapp-11eb2
+          projectId: ecommerceapp-11eb2f
