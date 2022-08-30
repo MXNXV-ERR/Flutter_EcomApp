@@ -8,6 +8,8 @@ name: Deploy to Firebase Hosting on merge
       - main
       - master
       - develop
+    tags:
+    - '*'
 jobs:
   build_and_deploy:
     name: "Build & Release"
