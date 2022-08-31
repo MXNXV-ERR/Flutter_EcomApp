@@ -23,7 +23,7 @@ jobs:
           sudo snap install flutter --classic && flutter channel beta && flutter pub get && flutter build apk -debug --split-per-abi  --no-sound-null-safety && flutter
           config --enable-web && flutter build web --web-renderer html --release --no-sound-null-safety
       - name: Push to release
-        uses: ncipollo/release-action@v1
+        uses: ncipollo/release-action@v1.10.0
         with:
           artifacts: "build/app/outputs/apk/release/*.apk"
           token: ${{ secrets.GITHUB_TOKEN}}
