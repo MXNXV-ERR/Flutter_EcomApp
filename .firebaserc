@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "ecommerceapp-11eb2"
-  }
+    "default": "ecommerceapp-11eb2",
+    "fixing workflow": "ecommerceapp-11eb2"
+  },
+  "targets": {},
+  "etags": {}
 }
