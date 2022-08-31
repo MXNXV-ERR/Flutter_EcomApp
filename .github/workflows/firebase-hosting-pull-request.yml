@@ -4,15 +4,26 @@
 name: Deploy to Firebase Hosting on PR
 'on': pull_request
 jobs:
-  build_and_preview:
-    if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
+  build_and_deploy:
+    name: "Build & Release"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: >- 
-        sudo snap install flutter --classic && flutter channel beta && flutter pub get && flutter build apk -debug --split-per-abi  --no-sound-null-safety
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+      - run: >-
+          sudo snap install flutter --classic && flutter channel beta && flutter pub get && flutter build apk -debug --split-per-abi  --no-sound-null-safety && flutter
+          config --enable-web && flutter build web --web-renderer html --release --no-sound-null-safety
+      - name: Push to release
+        uses: ncipollo/release-action@v1.10.0
+        with:
+          artifacts: "build/app/outputs/apk/release/*.apk"
+          token: ${{ secrets.GITHUB_TOKEN}}
+          tag: v1.0.${{github.run_number}}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ECOMMERCEAPP_11EB2 }}'
+          channelId: live
           projectId: ecommerceapp-11eb2
