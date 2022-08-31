@@ -9,7 +9,7 @@ name: Deploy to Firebase Hosting on merge
       - master
       - develop
     tags:
-    - '*'
+      - '*'
 jobs:
   build_and_deploy:
     name: "Build & Release"
@@ -25,8 +25,9 @@ jobs:
       - name: Push to release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "build/app/outputs/flutter-apk/*"
-          token: ${{ secrets.TOKEN}}
+          artifacts: "build/app/outputs/apk/release/*.apk"
+          token: ${{ secrets.GITHUB_TOKEN}}
+          tag: v1.0.${{github.run_number}}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
