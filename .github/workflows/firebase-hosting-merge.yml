@@ -33,4 +33,4 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ECOMMERCEAPP_11EB2 }}'
           channelId: live
-          projectId: ecommerceapp-11eb2f
+          projectId: ecommerceapp-11eb2

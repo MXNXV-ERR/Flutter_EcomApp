@@ -66,7 +66,7 @@ class _LoginState extends State<Login> {
                     height: 120.0,
                     width: 120.0,
                     child: Container(
-                      color: Colors.amber,
+                      color: Colors.blueGrey,
                       child: Center(child: Text("Logo holder")),
                     ),
                   ),

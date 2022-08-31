@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: >- 
-        sudo snap install flutter --classic && flutter channel beta && flutter pub get && flutter build apk -debug --split-per-abi  --no-sound-null-safety && flutter'
+        sudo snap install flutter --classic && flutter channel beta && flutter pub get && flutter build apk -debug --split-per-abi  --no-sound-null-safety
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
