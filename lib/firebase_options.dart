@@ -51,6 +51,7 @@ class DefaultFirebaseOptions {
     authDomain: 'ecommerceapp-11eb2.firebaseapp.com',
     storageBucket: 'ecommerceapp-11eb2.appspot.com',
     measurementId: 'G-6N5ENPT7WS',
+    databaseURL: 'https://ecommerceapp-11eb2-default-rtdb.firebaseio.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
@@ -59,6 +60,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '533432210019',
     projectId: 'ecommerceapp-11eb2',
     storageBucket: 'ecommerceapp-11eb2.appspot.com',
+    databaseURL: 'https://ecommerceapp-11eb2-default-rtdb.firebaseio.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -67,8 +69,12 @@ class DefaultFirebaseOptions {
     messagingSenderId: '533432210019',
     projectId: 'ecommerceapp-11eb2',
     storageBucket: 'ecommerceapp-11eb2.appspot.com',
-    iosClientId: '533432210019-2ldridros88vsejd3gg7u6c4d949jiup.apps.googleusercontent.com',
+    androidClientId:
+        '533432210019-scvlo418ffbqo9vofepljvs02ee4bvnk.apps.googleusercontent.com',
+    iosClientId:
+        '533432210019-2ldridros88vsejd3gg7u6c4d949jiup.apps.googleusercontent.com',
     iosBundleId: 'com.example.ecommerceApp',
+    databaseURL: 'https://ecommerceapp-11eb2-default-rtdb.firebaseio.com',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -77,7 +83,11 @@ class DefaultFirebaseOptions {
     messagingSenderId: '533432210019',
     projectId: 'ecommerceapp-11eb2',
     storageBucket: 'ecommerceapp-11eb2.appspot.com',
-    iosClientId: '533432210019-2ldridros88vsejd3gg7u6c4d949jiup.apps.googleusercontent.com',
+    androidClientId:
+        '533432210019-scvlo418ffbqo9vofepljvs02ee4bvnk.apps.googleusercontent.com',
+    iosClientId:
+        '533432210019-2ldridros88vsejd3gg7u6c4d949jiup.apps.googleusercontent.com',
     iosBundleId: 'com.example.ecommerceApp',
+    databaseURL: 'https://ecommerceapp-11eb2-default-rtdb.firebaseio.com',
   );
 }

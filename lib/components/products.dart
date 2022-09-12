@@ -12,7 +12,7 @@ class Products extends StatefulWidget {
 }
 
 class _ProductsState extends State<Products> {
-  var product_list = [
+  var productList = [
     {
       "name": "Product 1",
       "pic": "assets/imgs/1.jpg",
@@ -53,18 +53,18 @@ class _ProductsState extends State<Products> {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-        itemCount: product_list.length,
+        itemCount: productList.length,
         gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemBuilder: (BuildContext context, int index) {
           return Padding(
             padding: const EdgeInsets.all(4.0),
-            child: Single_prod(
-              name: product_list[index]['name'],
-              pic: product_list[index]['pic'],
-              oprice: product_list[index]['oprice'],
-              price: product_list[index]['price'],
-              details: product_list[index]['details'],
+            child: SingleProd(
+              name: productList[index]['name'],
+              pic: productList[index]['pic'],
+              oprice: productList[index]['oprice'],
+              price: productList[index]['price'],
+              details: productList[index]['details'],
               user: widget.user,
             ),
           );
@@ -72,14 +72,14 @@ class _ProductsState extends State<Products> {
   }
 }
 
-class Single_prod extends StatelessWidget {
-  final name;
-  final pic;
-  final oprice;
-  final price;
-  final details;
+class SingleProd extends StatelessWidget {
+  final dynamic name;
+  final dynamic pic;
+  final dynamic oprice;
+  final dynamic price;
+  final dynamic details;
   final User? user;
-  const Single_prod(
+  const SingleProd(
       {Key? key,
       this.name,
       this.pic,
@@ -97,7 +97,7 @@ class Single_prod extends StatelessWidget {
           child: Material(
             child: InkWell(
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                  builder: ((context) => Product_Details(
+                  builder: ((context) => ProductDetails(
                         user: user,
                         name: name,
                         price: price,

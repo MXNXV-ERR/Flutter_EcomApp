@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 //import 'package:ecommerce_app/main.dart';
 import 'package:ecommerce_app/components/products.dart';
 
-class Product_Details extends StatefulWidget {
+class ProductDetails extends StatefulWidget {
   final User? user;
-  final name;
-  final pic;
-  final oprice;
-  final price;
-  final details;
-  const Product_Details(
+  final dynamic name;
+  final dynamic pic;
+  final dynamic oprice;
+  final dynamic price;
+  final dynamic details;
+  const ProductDetails(
       {Key? key,
       this.name,
       this.pic,
@@ -22,10 +22,10 @@ class Product_Details extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<Product_Details> createState() => _Product_DetailsState();
+  State<ProductDetails> createState() => _ProductDetailsState();
 }
 
-class _Product_DetailsState extends State<Product_Details> {
+class _ProductDetailsState extends State<ProductDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,14 +94,14 @@ class _Product_DetailsState extends State<Product_Details> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          title: Text("Size"),
-                          content: Text("Choose your size"),
+                          title: const Text("Size"),
+                          content: const Text("Choose your size"),
                           actions: [
                             MaterialButton(
                               onPressed: () {
                                 Navigator.of(context).pop(context);
                               },
-                              child: Text("Close"),
+                              child: const Text("Close"),
                             ),
                           ],
                         );
@@ -110,7 +110,7 @@ class _Product_DetailsState extends State<Product_Details> {
                 color: Colors.white,
                 textColor: Colors.grey,
                 child: Row(
-                  children: [
+                  children: const [
                     Expanded(child: Text("Size")),
                     Expanded(child: Icon(Icons.arrow_drop_down))
                   ],
@@ -124,14 +124,14 @@ class _Product_DetailsState extends State<Product_Details> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          title: Text("Color"),
-                          content: Text("Choose your color"),
+                          title: const Text("Color"),
+                          content: const Text("Choose your color"),
                           actions: [
                             MaterialButton(
                               onPressed: () {
                                 Navigator.of(context).pop(context);
                               },
-                              child: Text("Close"),
+                              child: const Text("Close"),
                             ),
                           ],
                         );
@@ -140,7 +140,7 @@ class _Product_DetailsState extends State<Product_Details> {
                 color: Colors.white,
                 textColor: Colors.grey,
                 child: Row(
-                  children: [
+                  children: const [
                     Expanded(child: Text("Color")),
                     Expanded(child: Icon(Icons.arrow_drop_down))
                   ],
@@ -154,14 +154,14 @@ class _Product_DetailsState extends State<Product_Details> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          title: Text("Quantity"),
-                          content: Text("Choose your Quantity"),
+                          title: const Text("Quantity"),
+                          content: const Text("Choose your Quantity"),
                           actions: [
                             MaterialButton(
                               onPressed: () {
                                 Navigator.of(context).pop(context);
                               },
-                              child: Text("Close"),
+                              child: const Text("Close"),
                             ),
                           ],
                         );
@@ -170,7 +170,7 @@ class _Product_DetailsState extends State<Product_Details> {
                 color: Colors.white,
                 textColor: Colors.grey,
                 child: Row(
-                  children: [
+                  children: const [
                     Expanded(child: Text("Qty")),
                     Expanded(child: Icon(Icons.arrow_drop_down))
                   ],
@@ -186,7 +186,7 @@ class _Product_DetailsState extends State<Product_Details> {
                       onPressed: () {},
                       color: Colors.blueGrey,
                       textColor: Colors.white,
-                      child: new Text("Buy Now"))),
+                      child: const Text("Buy Now"))),
               const IconButton(
                   onPressed: null,
                   icon: Icon(
@@ -209,7 +209,7 @@ class _Product_DetailsState extends State<Product_Details> {
           ),
           Row(
             children: [
-              Padding(
+              const Padding(
                   padding: EdgeInsets.only(top: 12.0),
                   child: Text(
                     "Product name",
@@ -218,13 +218,13 @@ class _Product_DetailsState extends State<Product_Details> {
                     ),
                   )),
               Padding(
-                padding: EdgeInsets.only(top: 12.0),
+                padding: const EdgeInsets.only(top: 12.0),
                 child: Text(widget.name),
               )
             ],
           ),
           Row(
-            children: [
+            children: const [
               Padding(
                   padding: EdgeInsets.only(top: 12.0),
                   child: Text(
@@ -238,7 +238,7 @@ class _Product_DetailsState extends State<Product_Details> {
             ],
           ),
           Row(
-            children: [
+            children: const [
               Padding(
                   padding: EdgeInsets.only(top: 12.0),
                   child: Text(
@@ -254,9 +254,11 @@ class _Product_DetailsState extends State<Product_Details> {
             padding: EdgeInsets.all(8.0),
             child: Text("Similar Producs"),
           ),
-          const SizedBox(
+          SizedBox(
             height: 360.0,
-            child: Similar_Prods(),
+            child: SimilarProds(
+              user: widget.user,
+            ),
           ),
         ],
       ),
@@ -264,15 +266,15 @@ class _Product_DetailsState extends State<Product_Details> {
   }
 }
 
-class Similar_Prods extends StatefulWidget {
-  const Similar_Prods({Key? key}) : super(key: key);
-
+class SimilarProds extends StatefulWidget {
+  const SimilarProds({Key? key, required this.user}) : super(key: key);
+  final User? user;
   @override
-  State<Similar_Prods> createState() => _Similar_ProdsState();
+  State<SimilarProds> createState() => _SimilarProdsState();
 }
 
-class _Similar_ProdsState extends State<Similar_Prods> {
-  var product_list = [
+class _SimilarProdsState extends State<SimilarProds> {
+  var productList = [
     {
       "name": "Product 1",
       "pic": "assets/imgs/1.jpg",
@@ -309,21 +311,21 @@ class _Similar_ProdsState extends State<Similar_Prods> {
       "details": "",
     },
   ];
-  late User user;
+  //late User user;
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-        itemCount: product_list.length,
+        itemCount: productList.length,
         gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemBuilder: (BuildContext context, int index) {
-          return Single_prod(
-            user: user,
-            name: product_list[index]['name'],
-            pic: product_list[index]['pic'],
-            oprice: product_list[index]['oprice'],
-            price: product_list[index]['price'],
-            details: product_list[index]['details'],
+          return SingleProd(
+            user: widget.user,
+            name: productList[index]['name'],
+            pic: productList[index]['pic'],
+            oprice: productList[index]['oprice'],
+            price: productList[index]['price'],
+            details: productList[index]['details'],
           );
         });
   }

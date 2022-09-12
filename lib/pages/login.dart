@@ -41,7 +41,7 @@ class _LoginState extends State<Login> {
 
             //TODO::add bg img
 
-            Container(
+            const SizedBox(
               height: double.infinity,
               width: double.infinity,
               // child: Image.asset(
@@ -60,15 +60,15 @@ class _LoginState extends State<Login> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 //===============================Logo Holder=====================
-                Padding(
+                const Padding(
                   padding: EdgeInsets.only(bottom: 20.0),
                   child: SizedBox(
                     height: 120.0,
                     width: 120.0,
-                    child: Container(
-                      color: Colors.blueGrey,
-                      child: Center(child: Text("Logo holder")),
-                    ),
+                    child: Center(
+                        child: Image(
+                      image: AssetImage("assets/imgs/logo.png"),
+                    )),
                   ),
                 ),
                 //===============Email - password login====================
@@ -214,12 +214,12 @@ class _LoginState extends State<Login> {
 
   Future<void> validation() async {
     FocusManager.instance.primaryFocus?.unfocus();
-    final FormState? _form = _formkey.currentState;
-    if (_form!.validate()) {
+    final FormState? form = _formkey.currentState;
+    if (form!.validate()) {
       try {
         UserCredential result = await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: email, password: password);
-        print(result.user!.uid);
+        //print(result.user!.uid);
         if (result.user != null) {
           Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (context) => HomePage(
@@ -227,12 +227,12 @@ class _LoginState extends State<Login> {
                   )));
         }
       } on FirebaseException catch (e) {
-        print(e);
+        // print(e);
 
         _showSnackBar(e.message.toString());
       }
     } else {
-      print("No");
+      // print("No");
 
       _showSnackBar("Please wait... Processing data");
     }
@@ -240,50 +240,5 @@ class _LoginState extends State<Login> {
 
   void _showSnackBar(String content) {
     _scaffoldKey.currentState?.showSnackBar(SnackBar(content: Text(content)));
-  }
-}
-
-class GoogleSignInButton extends StatefulWidget {
-  const GoogleSignInButton({Key? key}) : super(key: key);
-
-  @override
-  State<GoogleSignInButton> createState() => _GoogleSignInButtonState();
-}
-
-class _GoogleSignInButtonState extends State<GoogleSignInButton> {
-  bool _isSigningIn = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.only(top: 5.0),
-        child: _isSigningIn
-            ? const CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.blueAccent),
-              )
-            : SizedBox(
-                height: 75.0,
-                width: 75.0,
-                child: IconButton(
-                    onPressed: () async {
-                      setState(() {
-                        _isSigningIn = true;
-                      });
-                      User? user =
-                          await Auth.signinWithGoogle(context: context);
-                      setState(() {
-                        _isSigningIn = false;
-                      });
-                      if (user != null) {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => HomePage(
-                                  user: user,
-                                )));
-                      }
-                    },
-                    icon: Image.asset(
-                      'assets/imgs/Google.png',
-                      fit: BoxFit.fill,
-                    ))));
   }
 }

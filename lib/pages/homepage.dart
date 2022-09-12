@@ -1,7 +1,7 @@
 // ignore: import_of_legacy_library_into_null_safe
-import 'package:carousel_pro/carousel_pro.dart';
+//import 'package:carousel_pro/carousel_pro.dart';
 //above is not null should be replaced with something null safe
-
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecommerce_app/pages/cart.dart';
 import 'package:ecommerce_app/pages/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import '../components/horizontallistview.dart';
 import '../components/products.dart';
 import 'package:ecommerce_app/components/auth.dart';
+
+final List<String> imgList = ['assets/imgs/1.jpg', 'assets/imgs/2.jpg'];
 
 class HomePage extends StatefulWidget {
   final User? user;
@@ -23,21 +25,18 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     Widget imgCaruosel = SizedBox(
-      height: 200.0,
-      child: Carousel(
-        boxFit: BoxFit.cover,
-        images: const [
-          AssetImage('assets/imgs/1.jpg'),
-          AssetImage('assets/imgs/2.jpg')
-        ],
-        autoplay: false,
-        animationCurve: Curves.fastOutSlowIn,
-        animationDuration: const Duration(milliseconds: 1000),
-        dotSize: 2.0,
-        dotColor: Colors.blueGrey,
-        indicatorBgPadding: 1.0,
-        dotBgColor: Colors.transparent,
-      ),
+      height: 250,
+      child: CarouselSlider(
+          items: imgList
+              .map((item) => Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.0)),
+                    child: Center(
+                        child: Image.asset(item,
+                            fit: BoxFit.cover, width: double.infinity)),
+                  ))
+              .toList(),
+          options: CarouselOptions(autoPlay: true)),
     );
 
     return Scaffold(
@@ -56,7 +55,7 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             onPressed: () {
               Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => Cart()));
+                  .push(MaterialPageRoute(builder: (context) => const Cart()));
             },
             icon: const Icon(
               Icons.shopping_bag,
@@ -72,7 +71,7 @@ class _HomePageState extends State<HomePage> {
           physics: const BouncingScrollPhysics(),
           children: [
             UserAccountsDrawerHeader(
-              accountName: Text(widget.user?.displayName ?? "????"),
+              accountName: Text(widget.user?.displayName ?? "Guest"),
               accountEmail: Text(widget.user?.email ?? "????"),
               currentAccountPicture: GestureDetector(
                 child: CircleAvatar(
@@ -88,34 +87,34 @@ class _HomePageState extends State<HomePage> {
             ),
             InkWell(
                 onTap: () {},
-                child: ListTile(
+                child: const ListTile(
                   title: Text("Home Page"),
                   leading: Icon(Icons.home, color: Colors.blueGrey),
                 )),
             InkWell(
                 onTap: () {},
-                child: ListTile(
+                child: const ListTile(
                   title: Text("My Account"),
                   leading: Icon(Icons.person, color: Colors.blueGrey),
                 )),
             InkWell(
                 onTap: () {},
-                child: ListTile(
+                child: const ListTile(
                   title: Text("My Orders"),
                   leading: Icon(Icons.shopping_bag, color: Colors.blueGrey),
                 )),
             InkWell(
                 onTap: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => Cart()));
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const Cart()));
                 },
-                child: ListTile(
+                child: const ListTile(
                   title: Text("Shopping Cart"),
                   leading: Icon(Icons.shopping_cart, color: Colors.blueGrey),
                 )),
             InkWell(
                 onTap: () {},
-                child: ListTile(
+                child: const ListTile(
                   title: Text(
                     "Favorites",
                   ),
@@ -124,7 +123,7 @@ class _HomePageState extends State<HomePage> {
             const Divider(),
             InkWell(
                 onTap: () {},
-                child: ListTile(
+                child: const ListTile(
                   title: Text("Settings"),
                   leading: Icon(
                     Icons.settings,
@@ -133,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                 )),
             InkWell(
                 onTap: () {},
-                child: ListTile(
+                child: const ListTile(
                   title: Text("About"),
                   leading: Icon(
                     Icons.help,
@@ -144,9 +143,9 @@ class _HomePageState extends State<HomePage> {
                 onTap: () async {
                   await Auth.signOut(context: context);
                   Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => Login()));
+                      MaterialPageRoute(builder: (context) => const Login()));
                 },
-                child: ListTile(
+                child: const ListTile(
                   title: Text("Sign Out"),
                   leading: Icon(
                     Icons.logout,
@@ -161,7 +160,7 @@ class _HomePageState extends State<HomePage> {
           imgCaruosel,
           Container(
               alignment: Alignment.centerLeft,
-              child: Padding(
+              child: const Padding(
                 padding: EdgeInsets.all(10.0),
                 child: Text("Categories"),
               )),

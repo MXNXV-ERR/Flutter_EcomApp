@@ -29,12 +29,14 @@ class _SignUpState extends State<SignUp> {
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
   late RegExp regExp = RegExp(p);
   bool obsecureTxt = false;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         scaffoldMessengerKey: _scaffoldKey,
         debugShowCheckedModeBanner: false,
-        home: Scaffold(
+        home: SafeArea(
+            child: Scaffold(
           backgroundColor: Colors.white,
           // key: _scaffoldKey,
           // appBar: AppBar(
@@ -45,9 +47,7 @@ class _SignUpState extends State<SignUp> {
               physics: const BouncingScrollPhysics(),
               child: Stack(alignment: Alignment.center, children: [
                 //=================Backgroung img=====================
-
                 //TODO::add bg img
-
                 // Container(
                 //   height: double.infinity,
                 //   width: double.infinity,
@@ -62,7 +62,6 @@ class _SignUpState extends State<SignUp> {
                 //   width: double.infinity,
                 //   color: Colors.white,
                 // ),
-
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -74,7 +73,10 @@ class _SignUpState extends State<SignUp> {
                         width: 120.0,
                         child: Container(
                           color: Colors.amber,
-                          child: const Center(child: Text("Logo holder")),
+                          child: const Center(
+                              child: Image(
+                            image: AssetImage("assets/imgs/logo.png"),
+                          )),
                         ),
                       ),
                     ),
@@ -204,7 +206,7 @@ class _SignUpState extends State<SignUp> {
                                   child: const Text("Sign up")),
                             ),
                           ),
-                        )
+                        ),
                       ]),
                     ),
                     Row(
@@ -226,7 +228,6 @@ class _SignUpState extends State<SignUp> {
                         const Text(" to sign in"),
                       ],
                     ),
-
                     const Divider(),
                     //==============other sign in options====================
                     const Padding(
@@ -258,7 +259,7 @@ class _SignUpState extends State<SignUp> {
               ]),
             ),
           ),
-        ));
+        )));
   }
 
   Future<void> validation() async {
@@ -266,8 +267,10 @@ class _SignUpState extends State<SignUp> {
     final FormState? form = _formkey.currentState;
     if (form!.validate()) {
       try {
-        UserCredential result = await FirebaseAuth.instance
-            .createUserWithEmailAndPassword(email: email, password: password);
+        UserCredential result =
+            await Auth.createUserWithEmailandPassword(email, password);
+        // UserCredential result = await FirebaseAuth.instance
+        //     .createUserWithEmailAndPassword(email: email, password: password);
         Map value = {
           "username": nameController.text,
           "email": result.user?.email,
@@ -302,50 +305,5 @@ class _SignUpState extends State<SignUp> {
         groupValue = e.toString();
       }
     });
-  }
-}
-
-class GoogleSignInButton extends StatefulWidget {
-  const GoogleSignInButton({Key? key}) : super(key: key);
-
-  @override
-  State<GoogleSignInButton> createState() => _GoogleSignInButtonState();
-}
-
-class _GoogleSignInButtonState extends State<GoogleSignInButton> {
-  bool _isSigningIn = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.only(top: 5.0),
-        child: _isSigningIn
-            ? const CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.blueAccent),
-              )
-            : SizedBox(
-                height: 75.0,
-                width: 75.0,
-                child: IconButton(
-                    onPressed: () async {
-                      setState(() {
-                        _isSigningIn = true;
-                      });
-                      User? user =
-                          await Auth.signinWithGoogle(context: context);
-                      setState(() {
-                        _isSigningIn = false;
-                      });
-                      if (user != null) {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => HomePage(
-                                  user: user,
-                                )));
-                      }
-                    },
-                    icon: Image.asset(
-                      'assets/imgs/Google.png',
-                      fit: BoxFit.fill,
-                    ))));
   }
 }
