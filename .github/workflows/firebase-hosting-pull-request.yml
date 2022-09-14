@@ -13,8 +13,8 @@ jobs:
         with:
           java-version: '12.x'
       - run: >-
-          sudo snap install flutter --classic && flutter channel beta && flutter pub get && flutter build apk -debug --split-per-abi  --no-sound-null-safety && flutter
-          config --enable-web && flutter build web --web-renderer html --release --no-sound-null-safety
+          sudo snap install flutter --classic && flutter channel beta && flutter pub get && flutter build apk -debug --split-per-abi && flutter
+          config --enable-web && flutter build web --web-renderer html --release
       - name: Push to release
         uses: ncipollo/release-action@v1.10.0
         with:
