@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "533432210019",
+    "firebase_url": "https://ecommerceapp-11eb2-default-rtdb.firebaseio.com",
     "project_id": "ecommerceapp-11eb2",
     "storage_bucket": "ecommerceapp-11eb2.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "533432210019-ein0dh2rqkhuu65q57frgljldn5vg8a7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ecommerce_app",
+            "certificate_hash": "de084eb7be015195f8a7c846d3138ceaa458448a"
+          }
+        },
         {
           "client_id": "533432210019-scvlo418ffbqo9vofepljvs02ee4bvnk.apps.googleusercontent.com",
           "client_type": 1,
