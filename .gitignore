@@ -60,6 +60,7 @@ unlinked.ds
 unlinked_spec.ds
 
 # Android related
+!**/android/app/key.jks
 **/android/**/gradle-wrapper.jar
 .gradle/
 **/android/captures/
@@ -68,8 +69,6 @@ unlinked_spec.ds
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
 **/android/key.properties
-*.jks
-!/android/app/key.jks
 
 # iOS/XCode related
 **/ios/**/*.mode1v3
