@@ -29,7 +29,6 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 // def keystorePropertiesFile = rootProject.file('key.properties')
 // if(keystorePropertiesFile.exists()){
 //     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-}
 
 android {
     compileSdkVersion flutter.compileSdkVersion
