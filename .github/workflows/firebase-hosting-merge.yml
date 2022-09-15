@@ -19,8 +19,7 @@ jobs:
         id: decode_keystore
         uses: timheuer/base64-to-file@v1
         with:
-          fileName: 'key.jks'
-          fileDir: './android/app/'
+          fileName: 'keystore/key.jks'
           encodedString: ${{ secrets.KEYSTORE }}
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
