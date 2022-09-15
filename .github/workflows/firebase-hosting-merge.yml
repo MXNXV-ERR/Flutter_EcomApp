@@ -27,10 +27,10 @@ jobs:
           java-version: '12.x'
       - run: >-
           sudo snap install flutter --classic && flutter channel beta && flutter pub get && flutter
-          config --enable-web && flutter build web --web-renderer html --release && cd android && chmod +x ./gradlew
+          config --enable-web && flutter build web --web-renderer html --release && cd android && chmod +x .\gradlew
       - name: Gradle task
         run: >- 
-          ./gradlew.bat -Pverbose=true -Ptarget-platform=android-arm,android-arm64,android-x64 -Ptarget=lib\main.dart -Pbase-application-name=android.app.Application -Pdart-obfuscation=false -Ptrack-widget-creation=true -Ptree-shake-icons=true -Psplit-per-abi=true assembleRelease
+          .\gradlew.bat -Pverbose=true -Ptarget-platform=android-arm,android-arm64,android-x64 -Ptarget=lib\main.dart -Pbase-application-name=android.app.Application -Pdart-obfuscation=false -Ptrack-widget-creation=true -Ptree-shake-icons=true -Psplit-per-abi=true assembleRelease
         env:
           SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
           SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
