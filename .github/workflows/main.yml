@@ -38,13 +38,7 @@ jobs:
         with:
           artifacts: "build/app/outputs/apk/release/*.apk"
           token: ${{ secrets.GITHUB_TOKEN}}
-          tag: v1.1.${{github.run_number}}
-      - name: Push to release
-        uses: ncipollo/release-action@v1.10.0
-        with:
-          artifacts: "build/app/outputs/apk/release/*.apk"
-          token: ${{ secrets.GITHUB_TOKEN}}
-          tag: v1.1.${{github.run_number}}
+          tag: v1.2.${{github.run_number}}
   build_and_deploy_web:
     name: "Web Deployer"
     runs-on: ubuntu-latest
