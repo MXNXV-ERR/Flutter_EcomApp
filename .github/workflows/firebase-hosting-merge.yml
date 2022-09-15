@@ -19,7 +19,7 @@ jobs:
         id: decode_keystore
         uses: timheuer/base64-to-file@v1
         with:
-          fileName: 'keystore/key.jks'
+          fileName: 'key.jks'
           encodedString: ${{ secrets.KEYSTORE }}
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
