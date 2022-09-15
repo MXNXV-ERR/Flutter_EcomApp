@@ -26,8 +26,14 @@ class _HomePageState extends State<HomePage> {
       child: CarouselSlider(
           items: imgList
               .map((item) => Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.0)),
+                    decoration: BoxDecoration(boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: const Offset(0, 3),
+                      )
+                    ]),
                     child: Center(
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(15),
@@ -35,7 +41,8 @@ class _HomePageState extends State<HomePage> {
                                 fit: BoxFit.cover, width: double.infinity))),
                   ))
               .toList(),
-          options: CarouselOptions(autoPlay: true)),
+          options: CarouselOptions(
+              autoPlay: true, enlargeCenterPage: true, aspectRatio: 2.0)),
     );
 
     return Scaffold(
