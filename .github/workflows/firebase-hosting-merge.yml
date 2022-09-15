@@ -26,7 +26,7 @@ jobs:
         with:
           java-version: '12.x'
       - run: >-
-          sudo snap install flutter --classic && flutter channel beta && flutter pub get && flutter build apk --split-per-abi  --release && flutter
+          sudo snap install flutter --classic && flutter channel beta && flutter pub get && flutter
           config --enable-web && flutter build web --web-renderer html --release && cd android && chmod +x ./gradlew
       - name: Gradle task
         run: >- 
