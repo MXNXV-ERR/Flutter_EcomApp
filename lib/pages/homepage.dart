@@ -29,8 +29,10 @@ class _HomePageState extends State<HomePage> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20.0)),
                     child: Center(
-                        child: Image.asset(item,
-                            fit: BoxFit.cover, width: double.infinity)),
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
+                            child: Image.asset(item,
+                                fit: BoxFit.cover, width: double.infinity))),
                   ))
               .toList(),
           options: CarouselOptions(autoPlay: true)),
