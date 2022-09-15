@@ -1,6 +1,3 @@
-// ignore: import_of_legacy_library_into_null_safe
-//import 'package:carousel_pro/carousel_pro.dart';
-//above is not null should be replaced with something null safe
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecommerce_app/pages/cart.dart';
 import 'package:ecommerce_app/pages/login.dart';
