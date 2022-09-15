@@ -163,7 +163,8 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
         children: [
-          imgCaruosel,
+          Padding(
+              padding: const EdgeInsets.only(bottom: 25.0), child: imgCaruosel),
           Container(
               alignment: Alignment.centerLeft,
               child: const Padding(
