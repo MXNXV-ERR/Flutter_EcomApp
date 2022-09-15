@@ -20,6 +20,7 @@ jobs:
         uses: timheuer/base64-to-file@v1
         with:
           fileName: 'key.jks'
+          fileDir: './android/app/'
           encodedString: ${{ secrets.KEYSTORE }}
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
