@@ -8,13 +8,26 @@ jobs:
     name: "Build & Release"
     runs-on: ubuntu-latest
     steps:
+      - name: Decode Keystore
+        id: decode_keystore
+        uses: timheuer/base64-to-file@v1
+        with:
+          fileName: 'keystore/key.jks'
+          encodedString: ${{ secrets.KEYSTORE }}
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
         with:
           java-version: '12.x'
       - run: >-
-          sudo snap install flutter --classic && flutter channel beta && flutter pub get && flutter build apk --split-per-abi && flutter
-          config --enable-web && flutter build web --web-renderer html --release
+          sudo snap install flutter --classic && flutter channel beta && flutter pub get && flutter build apk --split-per-abi --release && flutter
+          config --enable-web && flutter build web --web-renderer html --release && cd android && chmod +x ./gradlew
+      - name: Gradle task
+        run: >- 
+          ./gradlew.bat -Pverbose=true -Ptarget-platform=android-arm,android-arm64,android-x64 -Ptarget=lib\main.dart -Pbase-application-name=android.app.Application -Pdart-obfuscation=false -Ptrack-widget-creation=true -Ptree-shake-icons=true -Psplit-per-abi=true assembleRelease
+        env:
+          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
+          SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
       - name: Push to release
         uses: ncipollo/release-action@v1.10.0
         with:
