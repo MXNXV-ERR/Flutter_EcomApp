@@ -6,6 +6,7 @@ import './pages/login.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   return runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
     home: Login(),

@@ -161,30 +161,59 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: Column(
-        children: [
-          Padding(
-              padding: const EdgeInsets.only(bottom: 25.0), child: imgCaruosel),
-          Container(
-              alignment: Alignment.centerLeft,
-              child: const Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text("Categories"),
-              )),
-          const HorizontalList(),
-          Container(
-              alignment: Alignment.centerLeft,
-              child: const Padding(
-                padding: EdgeInsets.all(15.0),
-                child: Text("Recent products"),
-              )),
-          Flexible(
-            child: Products(
-              user: widget.user,
-            ),
-          )
-        ],
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            Padding(
+                padding: const EdgeInsets.only(bottom: 25.0),
+                child: imgCaruosel),
+            Container(
+                alignment: Alignment.centerLeft,
+                child: const Padding(
+                  padding: EdgeInsets.all(15.0),
+                  child: Text(
+                    "Categories",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                )),
+            const HorizontalList(),
+            Container(
+                alignment: Alignment.centerLeft,
+                child: const Padding(
+                  padding: EdgeInsets.all(15.0),
+                  child: Text(
+                    "Recent products",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                )),
+          ],
+        ),
       ),
+      // body: Column(
+      //   children: [
+      //     Padding(
+      //         padding: const EdgeInsets.only(bottom: 25.0), child: imgCaruosel),
+      //     Container(
+      //         alignment: Alignment.centerLeft,
+      //         child: const Padding(
+      //           padding: EdgeInsets.all(10.0),
+      //           child: Text("Categories"),
+      //         )),
+      //     const HorizontalList(),
+      //     Container(
+      //         alignment: Alignment.centerLeft,
+      //         child: const Padding(
+      //           padding: EdgeInsets.all(15.0),
+      //           child: Text("Recent products"),
+      //         )),
+      //     Flexible(
+      //       child: Products(
+      //         user: widget.user,
+      //       ),
+      //     )
+      //   ],
+      // ),
     );
   }
 }

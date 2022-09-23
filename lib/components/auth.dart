@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:ecommerce_app/db/user.dart';
 import 'package:ecommerce_app/firebase_options.dart';
 import 'package:ecommerce_app/pages/homepage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -5,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart' as http;
 //import 'package:ecommerce_app/firebase_options.dart';
 
 class Auth {
@@ -21,6 +24,7 @@ class Auth {
         user = userCredential.user;
       } catch (e) {
         print(e);
+        Auth.customSnackBAr(content: e.toString());
       }
     } else {
       //for android and ios
@@ -128,7 +132,7 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.only(top: 5.0),
+        padding: const EdgeInsets.only(bottom: 15.0),
         child: _isSigningIn
             ? const CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.blueAccent),
@@ -143,19 +147,38 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                       });
                       User? user =
                           await Auth.signinWithGoogle(context: context);
+                      UserServices userServices = UserServices();
+                      Map value = {
+                        "username": user?.displayName,
+                        "email": user?.email,
+                        "uid": user?.uid,
+                        "gender": await getGender(),
+                      };
+                      userServices.createUsr(user!.uid, value);
                       setState(() {
                         _isSigningIn = false;
                       });
-                      if (user != null) {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => HomePage(
-                                  user: user,
-                                )));
-                      }
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => HomePage(
+                                user: user,
+                              )));
                     },
                     icon: Image.asset(
                       'assets/imgs/Google.png',
                       fit: BoxFit.fill,
                     ))));
   }
+}
+
+GoogleSignIn googleSignIn = GoogleSignIn(
+    scopes: ['email', "https://www.googleapis.com/auth/userinfo.profile"]);
+Future<String> getGender() async {
+  final headers = await googleSignIn.currentUser?.authHeaders;
+  const String apiEndPoint =
+      "https://people.googleapis.com/v1/people/me?personFields=genders&key=";
+  final Uri url = Uri.parse(apiEndPoint);
+  final r = await http.get(url,
+      headers: {"Authorization": headers!["Authorization"] ?? "Undefined"});
+  final response = json.decode(r.body);
+  return response["genders"][0]["formattedValue"];
 }

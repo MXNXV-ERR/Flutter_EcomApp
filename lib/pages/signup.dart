@@ -37,7 +37,7 @@ class _SignUpState extends State<SignUp> {
         debugShowCheckedModeBanner: false,
         home: SafeArea(
             child: Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.black12,
           // key: _scaffoldKey,
           // appBar: AppBar(
           //   title: const Text("Login"),
@@ -45,218 +45,246 @@ class _SignUpState extends State<SignUp> {
           body: Center(
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
-              child: Stack(alignment: Alignment.center, children: [
-                //=================Backgroung img=====================
-                //TODO::add bg img
-                // Container(
-                //   height: double.infinity,
-                //   width: double.infinity,
-                //   // child: Image.asset(
-                //   //   'bgimg',
-                //   //   fit: BoxFit.cover,
-                //   //)
-                // ),
-                // //=======Opacity for bg img=============
-                // Container(
-                //   height: double.infinity,
-                //   width: double.infinity,
-                //   color: Colors.white,
-                // ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    //===============================Logo Holder=====================
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 20.0),
-                      child: SizedBox(
-                        height: 120.0,
-                        width: 120.0,
-                        child: Container(
-                          color: Colors.amber,
-                          child: const Center(
-                              child: Image(
-                            image: AssetImage("assets/imgs/logo.png"),
-                          )),
+              child: IntrinsicWidth(
+                child: IntrinsicHeight(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: const Offset(0, 3),
+                          )
+                        ]),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: Stack(alignment: Alignment.center, children: [
+                        //=================Backgroung img=====================
+                        //TODO::add bg img
+                        // Container(
+                        //   height: double.infinity,
+                        //   width: double.infinity,
+                        //   // child: Image.asset(
+                        //   //   'bgimg',
+                        //   //   fit: BoxFit.cover,
+                        //   //)
+                        // ),
+                        // //=======Opacity for bg img=============
+                        Container(
+                          height: double.infinity,
+                          width: double.infinity,
+                          color: Colors.white,
                         ),
-                      ),
-                    ),
-                    //===============Email - password login====================
-                    Form(
-                      key: _formkey,
-                      child: Column(//direction: Axis.vertical,
-                          children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5.0),
-                          child: TxtFrmFld(
-                              controller: nameController,
-                              onChanged: () {},
-                              validator: (value) {
-                                if (value!.length < 5) {
-                                  return "Please enter full name";
-                                }
-                              },
-                              label: "Full Name",
-                              icon: Icons.person),
-                        ),
-                        Row(
+                        Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Radio(
-                                value: "Male",
-                                groupValue: groupValue,
-                                onChanged: (e) => valueChanged(e)),
-                            const Text("Male    "),
-                            Radio(
-                                value: "Female",
-                                groupValue: groupValue,
-                                onChanged: (e) => valueChanged(e)),
-                            const Text("Female"),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5.0),
-                          child: TxtFrmFld(
-                              controller: emailController,
-                              icon: Icons.email,
-                              onChanged: (value) {
-                                validation();
-                                email = value;
-                                setState(() {
-                                  validation();
-                                  email = value.toString().trim();
-                                  //print("this" + email);
-                                });
-                              },
-                              validator: (value) {
-                                if (value == "") {
-                                  return "Please fill the email";
-                                } else if (!regExp.hasMatch(value!)) {
-                                  return "Email is Invalid";
-                                }
-                                setState(() {
-                                  email = value.toString().trim();
-                                });
-                                return null;
-                              },
-                              label: "Email"),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5.0),
-                          child: PwdFrmFld(
-                            controller: pwdController,
-                            onChanged: (value) {
-                              setState(() {
-                                validation();
-                                password = value;
-                              });
-                            },
-                            obsecureTxt: true,
-                            validator: (value) {
-                              if (value == "") {
-                                return 'Please enter the password';
-                              } else if (value!.length < 8) {
-                                return "Password too short";
-                              }
-                              setState(() {
-                                password = value.toString().trim();
-                              });
-                              return null;
-                            },
-                            label: 'Password',
-                            onTap: () {
-                              setState(() {
-                                obsecureTxt = !obsecureTxt;
-                              });
-                            },
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5.0),
-                          child: PwdFrmFld(
-                              controller: cpwdController,
-                              onChanged: () {},
-                              obsecureTxt: true,
-                              validator: (value) {
-                                if (value == null) {
-                                  return "This feild cannot be empty";
-                                } else if (pwdController.text != value) {
-                                  return "The passwords do not match";
-                                } else {
-                                  return null;
-                                }
-                              },
-                              label: "Confirm password",
-                              onTap: () {}),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 10.0),
-                          child: SizedBox(
-                            width: 300,
-                            height: 65,
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 15.0),
-                              child: ElevatedButton(
-                                  onPressed: validation,
-                                  style: ButtonStyle(
-                                      shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ))),
-                                  child: const Text("Sign up")),
+                            //===============================Logo Holder=====================
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 20.0),
+                              child: SizedBox(
+                                height: 120.0,
+                                width: 120.0,
+                                child: Container(
+                                  color: Colors.amber,
+                                  child: const Center(
+                                      child: Image(
+                                    image: AssetImage("assets/imgs/logo.png"),
+                                  )),
+                                ),
+                              ),
                             ),
-                          ),
+                            //===============Email - password login====================
+                            Form(
+                              key: _formkey,
+                              child: Column(//direction: Axis.vertical,
+                                  children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 5.0, horizontal: 10.0),
+                                  child: TxtFrmFld(
+                                      controller: nameController,
+                                      onChanged: () {},
+                                      validator: (value) {
+                                        if (value!.length < 5) {
+                                          return "Please enter full name";
+                                        }
+                                      },
+                                      label: "Full Name",
+                                      icon: Icons.person),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Radio(
+                                        value: "Male",
+                                        groupValue: groupValue,
+                                        onChanged: (e) => valueChanged(e)),
+                                    const Text("Male    "),
+                                    Radio(
+                                        value: "Female",
+                                        groupValue: groupValue,
+                                        onChanged: (e) => valueChanged(e)),
+                                    const Text("Female"),
+                                  ],
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 5.0),
+                                  child: TxtFrmFld(
+                                      controller: emailController,
+                                      icon: Icons.email,
+                                      onChanged: (value) {
+                                        validation();
+                                        email = value;
+                                        setState(() {
+                                          validation();
+                                          email = value.toString().trim();
+                                          //print("this" + email);
+                                        });
+                                      },
+                                      validator: (value) {
+                                        if (value == "") {
+                                          return "Please fill the email";
+                                        } else if (!regExp.hasMatch(value!)) {
+                                          return "Email is Invalid";
+                                        }
+                                        setState(() {
+                                          email = value.toString().trim();
+                                        });
+                                        return null;
+                                      },
+                                      label: "Email"),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 5.0),
+                                  child: PwdFrmFld(
+                                    controller: pwdController,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        validation();
+                                        password = value;
+                                      });
+                                    },
+                                    obsecureTxt: true,
+                                    validator: (value) {
+                                      if (value == "") {
+                                        return 'Please enter the password';
+                                      } else if (value!.length < 8) {
+                                        return "Password too short";
+                                      }
+                                      setState(() {
+                                        password = value.toString().trim();
+                                      });
+                                      return null;
+                                    },
+                                    label: 'Password',
+                                    onTap: () {
+                                      setState(() {
+                                        obsecureTxt = !obsecureTxt;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 5.0),
+                                  child: PwdFrmFld(
+                                      controller: cpwdController,
+                                      onChanged: () {},
+                                      obsecureTxt: true,
+                                      validator: (value) {
+                                        if (value == null) {
+                                          return "This feild cannot be empty";
+                                        } else if (pwdController.text !=
+                                            value) {
+                                          return "The passwords do not match";
+                                        } else {
+                                          return null;
+                                        }
+                                      },
+                                      label: "Confirm password",
+                                      onTap: () {}),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 10.0),
+                                  child: SizedBox(
+                                    width: 300,
+                                    height: 65,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(top: 15.0),
+                                      child: ElevatedButton(
+                                          onPressed: validation,
+                                          style: ButtonStyle(
+                                              shape: MaterialStateProperty.all<
+                                                      RoundedRectangleBorder>(
+                                                  RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12.0),
+                                          ))),
+                                          child: const Text("Sign up")),
+                                    ),
+                                  ),
+                                ),
+                              ]),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text("I already have an account! "),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const Login()));
+                                  },
+                                  child: const Text(
+                                    "Click here",
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        decoration: TextDecoration.underline),
+                                  ),
+                                ),
+                                const Text(" to sign in"),
+                              ],
+                            ),
+                            const Divider(),
+                            //==============other sign in options====================
+                            const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 15.0),
+                              child: Text(
+                                "Other Sign-in Options",
+                                style: TextStyle(color: Colors.black45),
+                              ),
+                            ),
+                            //Google Sign in
+                            FutureBuilder(
+                              future: Auth.initializeFirebase(context: context),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasError) {
+                                  return const Text(
+                                      'Error initializing firebase');
+                                } else if (snapshot.connectionState ==
+                                    ConnectionState.done) {
+                                  return const GoogleSignInButton();
+                                }
+                                return const CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    Colors.orangeAccent,
+                                  ),
+                                );
+                              },
+                            )
+                          ],
                         ),
                       ]),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text("I already have an account! "),
-                        InkWell(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const Login()));
-                          },
-                          child: const Text(
-                            "Click here",
-                            style: TextStyle(
-                                color: Colors.blue,
-                                decoration: TextDecoration.underline),
-                          ),
-                        ),
-                        const Text(" to sign in"),
-                      ],
-                    ),
-                    const Divider(),
-                    //==============other sign in options====================
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 15.0),
-                      child: Text(
-                        "Other Sign-in Options",
-                        style: TextStyle(color: Colors.black45),
-                      ),
-                    ),
-                    //Google Sign in
-                    FutureBuilder(
-                      future: Auth.initializeFirebase(context: context),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasError) {
-                          return const Text('Error initializing firebase');
-                        } else if (snapshot.connectionState ==
-                            ConnectionState.done) {
-                          return const GoogleSignInButton();
-                        }
-                        return const CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            Colors.orangeAccent,
-                          ),
-                        );
-                      },
-                    )
-                  ],
+                  ),
                 ),
-              ]),
+              ),
             ),
           ),
         )));
