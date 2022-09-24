@@ -128,6 +128,16 @@ class GoogleSignInButton extends StatefulWidget {
 
 class _GoogleSignInButtonState extends State<GoogleSignInButton> {
   bool _isSigningIn = false;
+  String groupValue = "Male";
+  valueChanged(Object? e) {
+    setState(() {
+      if (e == "Male") {
+        groupValue = e.toString();
+      } else if (e == "Female") {
+        groupValue = e.toString();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -147,14 +157,14 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                       });
                       User? user =
                           await Auth.signinWithGoogle(context: context);
-                      UserServices userServices = UserServices();
-                      Map value = {
-                        "username": user?.displayName,
-                        "email": user?.email,
-                        "uid": user?.uid,
-                        "gender": await getGender(),
-                      };
-                      userServices.createUsr(user!.uid, value);
+                      // UserServices userServices = UserServices();
+                      // Map value = {
+                      //   "username": user?.displayName,
+                      //   "email": user?.email,
+                      //   "uid": user?.uid,
+                      //   "gender": await getGender(),
+                      // };
+                      // userServices.createUsr(user!.uid, value);
                       setState(() {
                         _isSigningIn = false;
                       });
@@ -169,16 +179,22 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                     ))));
   }
 }
-
-GoogleSignIn googleSignIn = GoogleSignIn(
-    scopes: ['email', "https://www.googleapis.com/auth/userinfo.profile"]);
-Future<String> getGender() async {
-  final headers = await googleSignIn.currentUser?.authHeaders;
-  const String apiEndPoint =
-      "https://people.googleapis.com/v1/people/me?personFields=genders&key=";
-  final Uri url = Uri.parse(apiEndPoint);
-  final r = await http.get(url,
-      headers: {"Authorization": headers!["Authorization"] ?? "Undefined"});
-  final response = json.decode(r.body);
-  return response["genders"][0]["formattedValue"];
-}
+//   Future<String> getGender() async {
+//     AlertDialog(
+//       title: const Text("Gender"),
+//       actions: [
+//         Radio(
+//             value: "Male",
+//             groupValue: groupValue,
+//             onChanged: (e) => valueChanged(e)),
+//         const Text("Male    "),
+//         Radio(
+//             value: "Female",
+//             groupValue: groupValue,
+//             onChanged: (e) => valueChanged(e)),
+//         const Text("Female"),
+//       ],
+//     );
+//     return "";
+//   }
+// }
