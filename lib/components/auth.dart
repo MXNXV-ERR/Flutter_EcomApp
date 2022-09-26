@@ -157,14 +157,14 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                       });
                       User? user =
                           await Auth.signinWithGoogle(context: context);
-                      // UserServices userServices = UserServices();
-                      // Map value = {
-                      //   "username": user?.displayName,
-                      //   "email": user?.email,
-                      //   "uid": user?.uid,
-                      //   "gender": await getGender(),
-                      // };
-                      // userServices.createUsr(user!.uid, value);
+                      UserServices userServices = UserServices();
+                      Map value = {
+                        "username": user?.displayName,
+                        "email": user?.email,
+                        "uid": user?.uid,
+                        "gender": await getGender(),
+                      };
+                      userServices.createUsr(user!.uid, value);
                       setState(() {
                         _isSigningIn = false;
                       });
@@ -178,23 +178,33 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                       fit: BoxFit.fill,
                     ))));
   }
-}
-//   Future<String> getGender() async {
-//     AlertDialog(
-//       title: const Text("Gender"),
-//       actions: [
-//         Radio(
-//             value: "Male",
-//             groupValue: groupValue,
-//             onChanged: (e) => valueChanged(e)),
-//         const Text("Male    "),
-//         Radio(
-//             value: "Female",
-//             groupValue: groupValue,
-//             onChanged: (e) => valueChanged(e)),
-//         const Text("Female"),
-//       ],
-//     );
-//     return "";
+
+  Future<String> getGender() async {
+    String groupValue = "Male";
+    AlertDialog(
+      title: const Text("Gender"),
+      actions: [
+        Radio(
+            value: "Male",
+            groupValue: groupValue,
+            onChanged: (e) => valueChanged(e)),
+        const Text("Male    "),
+        Radio(
+            value: "Female",
+            groupValue: groupValue,
+            onChanged: (e) => valueChanged(e)),
+        const Text("Female"),
+      ],
+    );
+    return groupValue;
+  }
+//  valueChanged(Object? e) {
+//     setState(() {
+//       if (e == "Male") {
+//         groupValue = e.toString();
+//       } else if (e == "Female") {
+//         groupValue = e.toString();
+//       }
+//     });
 //   }
-// }
+}

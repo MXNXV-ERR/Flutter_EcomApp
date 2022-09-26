@@ -48,11 +48,34 @@ class _ProductsState extends State<Products> {
       "price": 50,
       "details": "",
     },
+    {
+      "name": "Product 6",
+      "pic": "assets/imgs/2.jpg",
+      "oprice": 100,
+      "price": 50,
+      "details": "",
+    },
+    {
+      "name": "Product 7",
+      "pic": "assets/imgs/2.jpg",
+      "oprice": 100,
+      "price": 50,
+      "details": "",
+    },
+    {
+      "name": "Product 8",
+      "pic": "assets/imgs/2.jpg",
+      "oprice": 100,
+      "price": 50,
+      "details": "",
+    },
   ];
   //late User user;
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
         itemCount: productList.length,
         gridDelegate:
             const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),

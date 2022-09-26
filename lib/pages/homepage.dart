@@ -161,10 +161,10 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: [
+      body: CustomScrollView(
+        slivers: [
+          SliverList(
+              delegate: SliverChildListDelegate([
             Padding(
                 padding: const EdgeInsets.only(bottom: 25.0),
                 child: imgCaruosel),
@@ -187,9 +187,44 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 )),
-          ],
-        ),
+          ])),
+          SliverGrid(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 1),
+            delegate: SliverChildListDelegate([Products(user: widget.user)]),
+          )
+        ],
       ),
+      // body: SingleChildScrollView(
+      //   physics: const BouncingScrollPhysics(),
+      //   child: Column(
+      //     children: [
+      //       Padding(
+      //           padding: const EdgeInsets.only(bottom: 25.0),
+      //           child: imgCaruosel),
+      //       Container(
+      //           alignment: Alignment.centerLeft,
+      //           child: const Padding(
+      //             padding: EdgeInsets.all(15.0),
+      //             child: Text(
+      //               "Categories",
+      //               style: TextStyle(fontWeight: FontWeight.bold),
+      //             ),
+      //           )),
+      //       const HorizontalList(),
+      //       Container(
+      //           alignment: Alignment.centerLeft,
+      //           child: const Padding(
+      //             padding: EdgeInsets.all(15.0),
+      //             child: Text(
+      //               "Recent products",
+      //               style: TextStyle(fontWeight: FontWeight.bold),
+      //             ),
+      //           )),
+      //       //Products(user: widget.user)
+      //     ],
+      //   ),
+      // ),
       // body: Column(
       //   children: [
       //     Padding(
