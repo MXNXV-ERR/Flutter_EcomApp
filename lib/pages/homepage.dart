@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import '../components/horizontallistview.dart';
 import '../components/products.dart';
 import 'package:ecommerce_app/components/auth.dart';
+import 'package:ecommerce_app/components/search.dart';
+import 'package:ecommerce_app/db/user.dart';
 
 final List<String> imgList = ['assets/imgs/1.jpg', 'assets/imgs/2.jpg'];
 
@@ -52,7 +54,11 @@ class _HomePageState extends State<HomePage> {
         title: const Text("EcomApp"),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              showSearch(context: context, delegate: CustomSearchBar());
+              UserServices userServices = UserServices();
+              userServices.getUsers(widget.user);
+            },
             icon: const Icon(
               Icons.search,
               color: Colors.white,
@@ -195,60 +201,6 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
-      // body: SingleChildScrollView(
-      //   physics: const BouncingScrollPhysics(),
-      //   child: Column(
-      //     children: [
-      //       Padding(
-      //           padding: const EdgeInsets.only(bottom: 25.0),
-      //           child: imgCaruosel),
-      //       Container(
-      //           alignment: Alignment.centerLeft,
-      //           child: const Padding(
-      //             padding: EdgeInsets.all(15.0),
-      //             child: Text(
-      //               "Categories",
-      //               style: TextStyle(fontWeight: FontWeight.bold),
-      //             ),
-      //           )),
-      //       const HorizontalList(),
-      //       Container(
-      //           alignment: Alignment.centerLeft,
-      //           child: const Padding(
-      //             padding: EdgeInsets.all(15.0),
-      //             child: Text(
-      //               "Recent products",
-      //               style: TextStyle(fontWeight: FontWeight.bold),
-      //             ),
-      //           )),
-      //       //Products(user: widget.user)
-      //     ],
-      //   ),
-      // ),
-      // body: Column(
-      //   children: [
-      //     Padding(
-      //         padding: const EdgeInsets.only(bottom: 25.0), child: imgCaruosel),
-      //     Container(
-      //         alignment: Alignment.centerLeft,
-      //         child: const Padding(
-      //           padding: EdgeInsets.all(10.0),
-      //           child: Text("Categories"),
-      //         )),
-      //     const HorizontalList(),
-      //     Container(
-      //         alignment: Alignment.centerLeft,
-      //         child: const Padding(
-      //           padding: EdgeInsets.all(15.0),
-      //           child: Text("Recent products"),
-      //         )),
-      //     Flexible(
-      //       child: Products(
-      //         user: widget.user,
-      //       ),
-      //     )
-      //   ],
-      // ),
     );
   }
 }

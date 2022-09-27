@@ -75,7 +75,7 @@ class _ProductsState extends State<Products> {
   Widget build(BuildContext context) {
     return GridView.builder(
         shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
+        //physics: NeverScrollableScrollPhysics(),
         itemCount: productList.length,
         gridDelegate:
             const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
