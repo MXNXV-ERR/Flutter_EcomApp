@@ -1,9 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ecommerce_app/components/cartprods.dart';
 
+import '../components/search.dart';
+
 class Cart extends StatefulWidget {
-  const Cart({Key? key}) : super(key: key);
+  final User? user;
+  const Cart({Key? key, required this.user}) : super(key: key);
 
   @override
   State<Cart> createState() => _CartState();
@@ -16,10 +20,13 @@ class _CartState extends State<Cart> {
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
         title: const Text("Cart"),
-        actions: const [
+        actions: [
           IconButton(
-            onPressed: null,
-            icon: Icon(
+            onPressed: () {
+              showSearch(
+                  context: context, delegate: CustomSearchBar(widget.user));
+            },
+            icon: const Icon(
               Icons.search,
               color: Colors.white,
             ),

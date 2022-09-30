@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 //import 'package:ecommerce_app/main.dart';
 import 'package:ecommerce_app/components/products.dart';
 
+import '../components/search.dart';
+
 class ProductDetails extends StatefulWidget {
   final User? user;
   final dynamic name;
@@ -41,10 +43,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                           )));
             },
             child: const Text("EcomApp")),
-        actions: const [
+        actions: [
           IconButton(
-            onPressed: null,
-            icon: Icon(
+            onPressed: () {
+              showSearch(
+                  context: context, delegate: CustomSearchBar(widget.user));
+            },
+            icon: const Icon(
               Icons.search,
               color: Colors.white,
             ),

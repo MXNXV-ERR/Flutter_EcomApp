@@ -8,7 +8,6 @@ import '../components/horizontallistview.dart';
 import '../components/products.dart';
 import 'package:ecommerce_app/components/auth.dart';
 import 'package:ecommerce_app/components/search.dart';
-import 'package:ecommerce_app/db/user.dart';
 
 final List<String> imgList = ['assets/imgs/1.jpg', 'assets/imgs/2.jpg'];
 
@@ -50,7 +49,9 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.white70,
       appBar: AppBar(
-        backgroundColor: Colors.blueGrey,
+        foregroundColor: Colors.black,
+        shadowColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
         title: const Text("EcomApp"),
         actions: [
           IconButton(
@@ -60,19 +61,23 @@ class _HomePageState extends State<HomePage> {
             },
             icon: const Icon(
               Icons.search,
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
-          IconButton(
-            onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => const Cart()));
-            },
-            icon: const Icon(
-              Icons.shopping_bag,
-              color: Colors.white,
-            ),
-          )
+          Padding(
+              padding: const EdgeInsets.only(right: 10.0),
+              child: IconButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => Cart(
+                            user: widget.user,
+                          )));
+                },
+                icon: const Icon(
+                  Icons.shopping_bag,
+                  color: Colors.black,
+                ),
+              ))
         ],
       ),
       drawer: Drawer(
@@ -86,15 +91,16 @@ class _HomePageState extends State<HomePage> {
               accountEmail: Text(widget.user?.email ?? "????"),
               currentAccountPicture: GestureDetector(
                 child: CircleAvatar(
-                  backgroundColor: Colors.blueGrey,
+                  backgroundColor: Colors.blueAccent,
                   child: Image(
                       image: NetworkImage(widget.user?.photoURL ??
                           "https://drive.google.com/file/d/1hyCMOYVMDEf4PYsIi40W0nkEON-YaLPG/view?usp=sharing")),
                 ),
               ),
-              decoration: const BoxDecoration(
-                color: Colors.blueGrey,
-              ),
+              decoration: BoxDecoration(
+                  color: Colors.blueAccent,
+                  border: Border.all(color: Colors.blueAccent),
+                  borderRadius: BorderRadius.circular(10.0)),
             ),
             InkWell(
                 onTap: () {},
@@ -116,8 +122,10 @@ class _HomePageState extends State<HomePage> {
                 )),
             InkWell(
                 onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const Cart()));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => Cart(
+                            user: widget.user,
+                          )));
                 },
                 child: const ListTile(
                   title: Text("Shopping Cart"),

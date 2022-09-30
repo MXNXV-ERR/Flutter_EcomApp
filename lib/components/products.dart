@@ -128,32 +128,43 @@ class SingleProd extends StatelessWidget {
                         pic: pic,
                         details: details,
                       )))),
-              child: GridTile(
-                footer: Container(
-                  color: Colors.white70,
-                  child: ListTile(
-                    leading: Text(
-                      name,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    title: Text(
-                      "\$$price",
-                      style: const TextStyle(
-                          color: Colors.green, fontWeight: FontWeight.w800),
-                    ),
-                    subtitle: Text(
-                      "\$$oprice",
-                      style: const TextStyle(
-                          decorationThickness: 3.0,
-                          decoration: TextDecoration.lineThrough,
-                          color: Color.fromARGB(255, 119, 118, 118),
-                          fontWeight: FontWeight.w800),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10.0),
+                child: GridTile(
+                  footer: Container(
+                    decoration: BoxDecoration(boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: const Offset(0, 3),
+                      )
+                    ]),
+                    //color: Colors.black12,
+                    child: ListTile(
+                      leading: Text(
+                        name,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      title: Text(
+                        "\$$price",
+                        style: const TextStyle(
+                            color: Colors.green, fontWeight: FontWeight.w800),
+                      ),
+                      subtitle: Text(
+                        "\$$oprice",
+                        style: const TextStyle(
+                            decorationThickness: 3.0,
+                            decoration: TextDecoration.lineThrough,
+                            color: Color.fromARGB(255, 119, 118, 118),
+                            fontWeight: FontWeight.w800),
+                      ),
                     ),
                   ),
-                ),
-                child: Image.asset(
-                  pic,
-                  fit: BoxFit.cover,
+                  child: Image.asset(
+                    pic,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
