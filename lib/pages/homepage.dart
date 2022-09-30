@@ -55,9 +55,8 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
             onPressed: () {
-              showSearch(context: context, delegate: CustomSearchBar());
-              UserServices userServices = UserServices();
-              userServices.getUsers(widget.user);
+              showSearch(
+                  context: context, delegate: CustomSearchBar(widget.user));
             },
             icon: const Icon(
               Icons.search,

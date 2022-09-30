@@ -104,11 +104,11 @@ class SingleProd extends StatelessWidget {
   final User? user;
   const SingleProd(
       {Key? key,
-      this.name,
-      this.pic,
-      this.oprice,
-      this.price,
-      this.details,
+      required this.name,
+      required this.pic,
+      required this.oprice,
+      required this.price,
+      required this.details,
       required this.user})
       : super(key: key);
 

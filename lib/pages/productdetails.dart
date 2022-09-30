@@ -13,11 +13,11 @@ class ProductDetails extends StatefulWidget {
   final dynamic details;
   const ProductDetails(
       {Key? key,
-      this.name,
-      this.pic,
-      this.oprice,
-      this.price,
-      this.details,
+      required this.name,
+      required this.pic,
+      required this.oprice,
+      required this.price,
+      required this.details,
       required this.user})
       : super(key: key);
 
