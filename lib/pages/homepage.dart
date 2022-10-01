@@ -159,8 +159,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                 )),
             InkWell(
-                onTap: () async {
+                onTap: ([bool mounted = true]) async {
                   await Auth.signOut(context: context);
+                  if (!mounted) return;
                   Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => const Login()));
                 },

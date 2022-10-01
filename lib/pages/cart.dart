@@ -18,7 +18,9 @@ class _CartState extends State<Cart> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blueGrey,
+        foregroundColor: Colors.black,
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
         title: const Text("Cart"),
         actions: [
           IconButton(
@@ -28,7 +30,7 @@ class _CartState extends State<Cart> {
             },
             icon: const Icon(
               Icons.search,
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
         ],

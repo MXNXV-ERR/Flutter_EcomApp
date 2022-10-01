@@ -32,7 +32,9 @@ class _ProductDetailsState extends State<ProductDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.black,
+        shadowColor: Colors.transparent,
         title: InkWell(
             onTap: () {
               Navigator.push(
@@ -51,7 +53,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             },
             icon: const Icon(
               Icons.search,
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
         ],
@@ -78,15 +80,33 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   decoration: TextDecoration.lineThrough,
                                 ))),
                         Expanded(
-                            child: Text(
+                            child: Container(
+                                child: Text(
                           "\$${widget.price}",
                           style: const TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.green),
-                        ))
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green,
+                          ),
+                        )))
                       ],
                     ),
                   )),
-              child: Image.asset(widget.pic),
+              child: Image.network(
+                widget.pic,
+                fit: BoxFit.contain,
+                loadingBuilder: (BuildContext context, Widget child,
+                    ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes!
+                          : null,
+                    ),
+                  );
+                },
+              ),
             ),
           ),
           Row(
@@ -189,7 +209,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   child: MaterialButton(
                       elevation: 2.0,
                       onPressed: () {},
-                      color: Colors.blueGrey,
+                      color: Colors.blueAccent,
                       textColor: Colors.white,
                       child: const Text("Buy Now"))),
               const IconButton(
@@ -207,10 +227,9 @@ class _ProductDetailsState extends State<ProductDetails> {
             ],
           ),
           const Divider(),
-          const ListTile(
-            title: Text("Product details"),
-            subtitle: Text(
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged"),
+          ListTile(
+            title: const Text("Product details"),
+            subtitle: Text(widget.details),
           ),
           Row(
             children: [

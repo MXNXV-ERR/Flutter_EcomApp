@@ -43,16 +43,20 @@ class CustomSearchBar extends SearchDelegate {
         } else {
           final searchTerms =
               snapshot.data?.docs.map((e) => e.get("name")).toList();
-
+          final fullDetails =
+              snapshot.data?.docs.map((e) => e.get("name")).toList();
+          print(fullDetails);
           for (var products in searchTerms!) {
             if (products.toLowerCase().contains(query.toLowerCase())) {
               matchQuery.add(products);
             }
           }
+
           return ListView.builder(
               itemCount: matchQuery.length,
               itemBuilder: ((context, index) {
                 var result = matchQuery[index];
+                //var details = getProdDetails();
                 return ListTile(
                   title: Text(result),
                   // onTap: () {
@@ -79,6 +83,7 @@ class CustomSearchBar extends SearchDelegate {
           final searchTerms =
               snapshot.data?.docs.map((e) => e.get("name")).toList();
           print(searchTerms);
+
           for (var products in searchTerms!) {
             if (products.toLowerCase().contains(query.toLowerCase())) {
               matchQuery.add(products);
@@ -89,25 +94,29 @@ class CustomSearchBar extends SearchDelegate {
               itemCount: matchQuery.length,
               itemBuilder: ((context, index) {
                 var result = matchQuery[index];
+                final snapObj =
+                    snapshot.data?.docs.map((e) => e.data()).toList();
+
                 return ListTile(
                   title: Text(result),
-                  // onTap: () {
-                  //   Navigator.of(context).push(MaterialPageRoute(
-                  //     builder: (context) => null)//ProductDetails(user: user,),
-                  //   ));
-                  // },
+                  onTap: () {
+                    final singleProdFB =
+                        snapObj![index] as Map<String, dynamic>;
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ProductDetails(
+                        user: user,
+                        name: singleProdFB['name'],
+                        details: singleProdFB['details'],
+                        oprice: singleProdFB['oprice'],
+                        pic: singleProdFB['pic'],
+                        price: singleProdFB['price'],
+                      ),
+                    ));
+                  },
                 );
               }));
         }
       },
     );
   }
-
-  // List<String> getProdDetails(String result) {
-  //   final snapshot = fbfsi.collection("ecom").get();
-  //   List<String> prodDetails;
-  //   res.then((value) => {
-  //     prodDetails.add(snapshot.)
-  //   })
-  // }
 }
