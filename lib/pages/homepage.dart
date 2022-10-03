@@ -81,100 +81,8 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       drawer: Drawer(
-        //backgroundColor: Colors.blueGrey,
-        child: ListView(
-          //shrinkWrap: true,
-          physics: const BouncingScrollPhysics(),
-          children: [
-            UserAccountsDrawerHeader(
-              accountName: Text(widget.user?.displayName ?? "Guest"),
-              accountEmail: Text(widget.user?.email ?? "????"),
-              currentAccountPicture: GestureDetector(
-                child: CircleAvatar(
-                  backgroundColor: Colors.blueAccent,
-                  child: Image(
-                      image: NetworkImage(widget.user?.photoURL ??
-                          "https://drive.google.com/file/d/1hyCMOYVMDEf4PYsIi40W0nkEON-YaLPG/view?usp=sharing")),
-                ),
-              ),
-              decoration: BoxDecoration(
-                  color: Colors.blueAccent,
-                  border: Border.all(color: Colors.blueAccent),
-                  borderRadius: BorderRadius.circular(10.0)),
-            ),
-            InkWell(
-                onTap: () {},
-                child: const ListTile(
-                  title: Text("Home Page"),
-                  leading: Icon(Icons.home, color: Colors.blueGrey),
-                )),
-            InkWell(
-                onTap: () {},
-                child: const ListTile(
-                  title: Text("My Account"),
-                  leading: Icon(Icons.person, color: Colors.blueGrey),
-                )),
-            InkWell(
-                onTap: () {},
-                child: const ListTile(
-                  title: Text("My Orders"),
-                  leading: Icon(Icons.shopping_bag, color: Colors.blueGrey),
-                )),
-            InkWell(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => Cart(
-                            user: widget.user,
-                          )));
-                },
-                child: const ListTile(
-                  title: Text("Shopping Cart"),
-                  leading: Icon(Icons.shopping_cart, color: Colors.blueGrey),
-                )),
-            InkWell(
-                onTap: () {},
-                child: const ListTile(
-                  title: Text(
-                    "Favorites",
-                  ),
-                  leading: Icon(Icons.favorite, color: Colors.blueGrey),
-                )),
-            const Divider(),
-            InkWell(
-                onTap: () {},
-                child: const ListTile(
-                  title: Text("Settings"),
-                  leading: Icon(
-                    Icons.settings,
-                    color: Colors.blueAccent,
-                  ),
-                )),
-            InkWell(
-                onTap: () {},
-                child: const ListTile(
-                  title: Text("About"),
-                  leading: Icon(
-                    Icons.help,
-                    color: Colors.blue,
-                  ),
-                )),
-            InkWell(
-                onTap: ([bool mounted = true]) async {
-                  await Auth.signOut(context: context);
-                  if (!mounted) return;
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => const Login()));
-                },
-                child: const ListTile(
-                  title: Text("Sign Out"),
-                  leading: Icon(
-                    Icons.logout,
-                    color: Colors.redAccent,
-                  ),
-                ))
-          ],
-        ),
-      ),
+          //backgroundColor: Colors.blueGrey,
+          child: drawerListViewBuilder()),
       body: CustomScrollView(
         slivers: [
           SliverList(
@@ -209,6 +117,101 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
+    );
+  }
+
+  Widget drawerListViewBuilder() {
+    return ListView(
+      //shrinkWrap: true,
+      physics: const BouncingScrollPhysics(),
+      children: [
+        UserAccountsDrawerHeader(
+          accountName: Text(widget.user?.displayName ?? "Guest"),
+          accountEmail: Text(widget.user?.email ?? "????"),
+          currentAccountPicture: GestureDetector(
+            child: CircleAvatar(
+              backgroundColor: Colors.blueAccent,
+              child: Image(
+                  image: NetworkImage(widget.user?.photoURL ??
+                      "https://drive.google.com/file/d/1hyCMOYVMDEf4PYsIi40W0nkEON-YaLPG/view?usp=sharing")),
+            ),
+          ),
+          decoration: BoxDecoration(
+              color: Colors.blueAccent,
+              border: Border.all(color: Colors.blueAccent),
+              borderRadius: BorderRadius.circular(10.0)),
+        ),
+        InkWell(
+            onTap: () {},
+            child: const ListTile(
+              title: Text("Home Page"),
+              leading: Icon(Icons.home, color: Colors.blueGrey),
+            )),
+        InkWell(
+            onTap: () {},
+            child: const ListTile(
+              title: Text("My Account"),
+              leading: Icon(Icons.person, color: Colors.blueGrey),
+            )),
+        InkWell(
+            onTap: () {},
+            child: const ListTile(
+              title: Text("My Orders"),
+              leading: Icon(Icons.shopping_bag, color: Colors.blueGrey),
+            )),
+        InkWell(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => Cart(
+                        user: widget.user,
+                      )));
+            },
+            child: const ListTile(
+              title: Text("Shopping Cart"),
+              leading: Icon(Icons.shopping_cart, color: Colors.blueGrey),
+            )),
+        InkWell(
+            onTap: () {},
+            child: const ListTile(
+              title: Text(
+                "Favorites",
+              ),
+              leading: Icon(Icons.favorite, color: Colors.blueGrey),
+            )),
+        const Divider(),
+        InkWell(
+            onTap: () {},
+            child: const ListTile(
+              title: Text("Settings"),
+              leading: Icon(
+                Icons.settings,
+                color: Colors.blueAccent,
+              ),
+            )),
+        InkWell(
+            onTap: () {},
+            child: const ListTile(
+              title: Text("About"),
+              leading: Icon(
+                Icons.help,
+                color: Colors.blue,
+              ),
+            )),
+        InkWell(
+            onTap: ([bool mounted = true]) async {
+              await Auth.signOut(context: context);
+              if (!mounted) return;
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const Login()));
+            },
+            child: const ListTile(
+              title: Text("Sign Out"),
+              leading: Icon(
+                Icons.logout,
+                color: Colors.redAccent,
+              ),
+            ))
+      ],
     );
   }
 }

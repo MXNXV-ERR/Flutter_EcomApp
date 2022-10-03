@@ -80,14 +80,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   decoration: TextDecoration.lineThrough,
                                 ))),
                         Expanded(
-                            child: Container(
-                                child: Text(
+                            child: Text(
                           "\$${widget.price}",
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.green,
                           ),
-                        )))
+                        ))
                       ],
                     ),
                   )),
@@ -231,47 +230,53 @@ class _ProductDetailsState extends State<ProductDetails> {
             title: const Text("Product details"),
             subtitle: Text(widget.details),
           ),
-          Row(
-            children: [
-              const Padding(
-                  padding: EdgeInsets.only(top: 12.0),
-                  child: Text(
-                    "Product name",
-                    style: TextStyle(
-                      color: Colors.blueGrey,
-                    ),
-                  )),
-              Padding(
-                padding: const EdgeInsets.only(top: 12.0),
-                child: Text(widget.name),
-              )
-            ],
-          ),
-          Row(
-            children: const [
-              Padding(
-                  padding: EdgeInsets.only(top: 12.0),
-                  child: Text(
-                    "Product brand",
-                    style: TextStyle(
-                      color: Colors.blueGrey,
-                    ),
-                  )),
-              Padding(
-                  padding: EdgeInsets.only(top: 12.0), child: Text("Brand x")),
-            ],
-          ),
-          Row(
-            children: const [
-              Padding(
-                  padding: EdgeInsets.only(top: 12.0),
-                  child: Text(
-                    "Product fit",
-                    style: TextStyle(
-                      color: Colors.blueGrey,
-                    ),
-                  ))
-            ],
+          Padding(
+            padding: const EdgeInsets.only(left: 15.0),
+            child: Column(children: [
+              Row(
+                children: [
+                  const Padding(
+                      padding: EdgeInsets.only(top: 12.0),
+                      child: Text(
+                        "Product name",
+                        style: TextStyle(
+                          color: Colors.blueGrey,
+                        ),
+                      )),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12.0),
+                    child: Text(widget.name),
+                  )
+                ],
+              ),
+              Row(
+                children: const [
+                  Padding(
+                      padding: EdgeInsets.only(top: 12.0),
+                      child: Text(
+                        "Product brand",
+                        style: TextStyle(
+                          color: Colors.blueGrey,
+                        ),
+                      )),
+                  Padding(
+                      padding: EdgeInsets.only(top: 12.0),
+                      child: Text("Brand x")),
+                ],
+              ),
+              Row(
+                children: const [
+                  Padding(
+                      padding: EdgeInsets.only(top: 12.0),
+                      child: Text(
+                        "Product fit",
+                        style: TextStyle(
+                          color: Colors.blueGrey,
+                        ),
+                      ))
+                ],
+              ),
+            ]),
           ),
           const Divider(),
           const Padding(

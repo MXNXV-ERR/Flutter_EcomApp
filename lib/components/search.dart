@@ -43,9 +43,9 @@ class CustomSearchBar extends SearchDelegate {
         } else {
           final searchTerms =
               snapshot.data?.docs.map((e) => e.get("name")).toList();
-          final fullDetails =
-              snapshot.data?.docs.map((e) => e.get("name")).toList();
-          print(fullDetails);
+          // final fullDetails =
+          //     snapshot.data?.docs.map((e) => e.get("name")).toList();
+          //print(fullDetails);
           for (var products in searchTerms!) {
             if (products.toLowerCase().contains(query.toLowerCase())) {
               matchQuery.add(products);
@@ -82,7 +82,7 @@ class CustomSearchBar extends SearchDelegate {
         } else {
           final searchTerms =
               snapshot.data?.docs.map((e) => e.get("name")).toList();
-          print(searchTerms);
+          //print(searchTerms);
 
           for (var products in searchTerms!) {
             if (products.toLowerCase().contains(query.toLowerCase())) {

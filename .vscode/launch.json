@@ -4,6 +4,7 @@
         "name": "Flutter",
         "type": "dart",
         "request": "launch",
+      //  "console": "terminal",
         "program": "lib/main.dart",
         "flutterMode": "debug",
             "args": [

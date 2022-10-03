@@ -45,12 +45,12 @@ class _CartProdsState extends State<CartProds> {
 }
 
 class SingleCartProd extends StatelessWidget {
-  final cartName;
-  final cartPic;
-  final cartPrice;
-  final cartSize;
-  final cartColor;
-  final cartQty;
+  final dynamic cartName;
+  final dynamic cartPic;
+  final dynamic cartPrice;
+  final dynamic cartSize;
+  final dynamic cartColor;
+  final dynamic cartQty;
   const SingleCartProd(
       {Key? key,
       this.cartName,

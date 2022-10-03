@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:ecommerce_app/db/user.dart';
 import 'package:ecommerce_app/firebase_options.dart';
 import 'package:ecommerce_app/pages/homepage.dart';
@@ -7,10 +6,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-//import 'package:ecommerce_app/firebase_options.dart';
+import 'package:ecommerce_app/components/notifiers.dart';
 
 class Auth {
-  static Future<User?> signinWithGoogle({required BuildContext context}) async {
+  static Future<User?> signinWithGoogle({
+    required BuildContext context,
+  }) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
 
@@ -20,10 +21,11 @@ class Auth {
       try {
         final UserCredential userCredential =
             await auth.signInWithPopup(authProvider);
+
         user = userCredential.user;
       } catch (e) {
-        print(e);
-        Auth.customSnackBAr(content: e.toString());
+        //print(e);
+        Notifiers.showSnackBar(context, e.toString());
       }
     } else {
       //for android and ios
@@ -43,18 +45,23 @@ class Auth {
         try {
           final UserCredential userCredential =
               await auth.signInWithCredential(credential);
+
           user = userCredential.user;
         } on FirebaseAuthException catch (e) {
           if (e.code == 'account-exists-with-different-credential') {
-            ScaffoldMessenger.of(context).showSnackBar(
-                Auth.customSnackBAr(content: 'Account already exists'));
+            Notifiers.showSnackBar(context, 'Account already exists');
+            // ScaffoldMessenger.of(context).showSnackBar(
+            //     Auth.customSnackBAr(content: ));
           } else if (e.code == 'invalid-credential') {
-            ScaffoldMessenger.of(context).showSnackBar(Auth.customSnackBAr(
-                content: 'Invalid credentials.Try again...'));
+            Notifiers.showSnackBar(context, 'Invalid credentials.Try again...');
+            // ScaffoldMessenger.of(context).showSnackBar(Auth.customSnackBAr(
+            //     content: ));
           }
         } catch (e) {
-          ScaffoldMessenger.of(context).showSnackBar(Auth.customSnackBAr(
-              content: 'Error occured using Google Sign-in.Try again...'));
+          Notifiers.showSnackBar(
+              context, 'Error occured using Google Sign-in.Try again...');
+          // ScaffoldMessenger.of(context).showSnackBar(Auth.customSnackBAr(
+          //     content: ));
         }
       }
     }
@@ -62,20 +69,19 @@ class Auth {
     return user;
   }
 
-  static SnackBar customSnackBAr({required String content}) {
-    return SnackBar(
-        backgroundColor: Colors.black,
-        content: Text(
-          content,
-          style: const TextStyle(color: Colors.redAccent),
-        ));
-  }
+  // static SnackBar customSnackBAr({required String content}) {
+  //   return SnackBar(
+  //       backgroundColor: Colors.black,
+  //       content: Text(
+  //         content,
+  //         style: const TextStyle(color: Colors.redAccent),
+  //       ));
+  // }
 
   static Future<FirebaseApp?> initializeFirebase(
       {required BuildContext context}) async {
     FirebaseApp firebaseApp = await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform);
-
     User? user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
@@ -97,17 +103,11 @@ class Auth {
       }
       await FirebaseAuth.instance.signOut();
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          Auth.customSnackBAr(content: 'Error Signing out.Try Again...'));
+      Notifiers.showSnackBar(context, 'Error Signing out.Try Again...');
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //     Auth.customSnackBAr(content: ));
     }
   }
-
-  // static Future<User?> signinWithEmailAndPwd({required BuildContext context,required GlobalKey<FormState> formkey}){
-  //   FormState? formState =formkey.currentState;
-  //   if(formState?.validate()??false){
-  //     User user =await fire
-  //   }
-  // }
 
   static Future<UserCredential> createUserWithEmailandPassword(
       String email, String password) async {
@@ -197,13 +197,4 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
     );
     return groupValue;
   }
-//  valueChanged(Object? e) {
-//     setState(() {
-//       if (e == "Male") {
-//         groupValue = e.toString();
-//       } else if (e == "Female") {
-//         groupValue = e.toString();
-//       }
-//     });
-//   }
 }
