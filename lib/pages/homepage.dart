@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:ecommerce_app/pages/cart.dart';
 import 'package:ecommerce_app/pages/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,6 +21,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  //Reference ref = FirebaseStorage.instance.ref().child("featured");
+  //final list = ref.listAll();
+
   @override
   Widget build(BuildContext context) {
     Widget imgCaruosel = SizedBox(

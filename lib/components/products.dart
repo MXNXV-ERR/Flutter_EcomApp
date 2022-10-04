@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -12,86 +13,101 @@ class Products extends StatefulWidget {
 }
 
 class _ProductsState extends State<Products> {
-  var productList = [
-    {
-      "name": "Product 1",
-      "pic": "assets/imgs/1.jpg",
-      "oprice": 100,
-      "price": 50,
-      "details": "",
-    },
-    {
-      "name": "Product 2",
-      "pic": "assets/imgs/1.jpg",
-      "oprice": 100,
-      "price": 50,
-      "details": "",
-    },
-    {
-      "name": "Product 3",
-      "pic": "assets/imgs/2.jpg",
-      "oprice": 100,
-      "price": 50,
-      "details": "",
-    },
-    {
-      "name": "Product 4",
-      "pic": "assets/imgs/1.jpg",
-      "oprice": 100,
-      "price": 50,
-      "details": "",
-    },
-    {
-      "name": "Product 5",
-      "pic": "assets/imgs/2.jpg",
-      "oprice": 100,
-      "price": 50,
-      "details": "",
-    },
-    {
-      "name": "Product 6",
-      "pic": "assets/imgs/2.jpg",
-      "oprice": 100,
-      "price": 50,
-      "details": "",
-    },
-    {
-      "name": "Product 7",
-      "pic": "assets/imgs/2.jpg",
-      "oprice": 100,
-      "price": 50,
-      "details": "",
-    },
-    {
-      "name": "Product 8",
-      "pic": "assets/imgs/2.jpg",
-      "oprice": 100,
-      "price": 50,
-      "details": "",
-    },
-  ];
-  //late User user;
+  FirebaseFirestore fbfsi = FirebaseFirestore.instance;
+
+  // var productList = [
+  //   {
+  //     "name": "Product 1",
+  //     "pic": "assets/imgs/1.jpg",
+  //     "oprice": 100,
+  //     "price": 50,
+  //     "details": "",
+  //   },
+  //   {
+  //     "name": "Product 2",
+  //     "pic": "assets/imgs/1.jpg",
+  //     "oprice": 100,
+  //     "price": 50,
+  //     "details": "",
+  //   },
+  //   {
+  //     "name": "Product 3",
+  //     "pic": "assets/imgs/2.jpg",
+  //     "oprice": 100,
+  //     "price": 50,
+  //     "details": "",
+  //   },
+  //   {
+  //     "name": "Product 4",
+  //     "pic": "assets/imgs/1.jpg",
+  //     "oprice": 100,
+  //     "price": 50,
+  //     "details": "",
+  //   },
+  //   {
+  //     "name": "Product 5",
+  //     "pic": "assets/imgs/2.jpg",
+  //     "oprice": 100,
+  //     "price": 50,
+  //     "details": "",
+  //   },
+  //   {
+  //     "name": "Product 6",
+  //     "pic": "assets/imgs/2.jpg",
+  //     "oprice": 100,
+  //     "price": 50,
+  //     "details": "",
+  //   },
+  //   {
+  //     "name": "Product 7",
+  //     "pic": "assets/imgs/2.jpg",
+  //     "oprice": 100,
+  //     "price": 50,
+  //     "details": "",
+  //   },
+  //   {
+  //     "name": "Product 8",
+  //     "pic": "assets/imgs/2.jpg",
+  //     "oprice": 100,
+  //     "price": 50,
+  //     "details": "",
+  //   },
+  // ];
+
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-        shrinkWrap: true,
-        //physics: NeverScrollableScrollPhysics(),
-        itemCount: productList.length,
-        gridDelegate:
-            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-        itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: SingleProd(
-              name: productList[index]['name'],
-              pic: productList[index]['pic'],
-              oprice: productList[index]['oprice'],
-              price: productList[index]['price'],
-              details: productList[index]['details'],
-              user: widget.user,
-            ),
-          );
-        });
+    return StreamBuilder(
+      stream: fbfsi.collection("ecom").snapshots(),
+      builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (!snapshot.hasData) {
+          return const Center(child: CircularProgressIndicator());
+        } else {
+          final snapObj = snapshot.data?.docs.map((e) => e.data()).toList();
+
+          return GridView.builder(
+              shrinkWrap: true,
+              //physics: NeverScrollableScrollPhysics(),
+              itemCount: snapObj?.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2),
+              itemBuilder: (BuildContext context, int index) {
+                final productList = snapObj![index] as Map<String, dynamic>;
+                print(productList);
+                return Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: SingleProd(
+                    name: productList['name'],
+                    pic: productList['pic'],
+                    oprice: productList['oprice'],
+                    price: productList['price'],
+                    details: productList['details'],
+                    user: widget.user,
+                  ),
+                );
+              });
+        }
+      },
+    );
   }
 }
 
@@ -172,7 +188,7 @@ class SingleProd extends StatelessWidget {
                             ),
                           ),
                         ),
-                        child: Image.asset(
+                        child: Image.network(
                           pic,
                           fit: BoxFit.cover,
                         ),

@@ -46,7 +46,6 @@ class _SignUpState extends State<SignUp> {
                 body: liftedBoxBuilder(
                   child: Stack(alignment: Alignment.center, children: [
                     //=================Backgroung img=====================
-                    //TODO::add bg img
                     // Container(
                     //   height: double.infinity,
                     //   width: double.infinity,
