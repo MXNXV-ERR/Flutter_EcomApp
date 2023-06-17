@@ -1,4 +1,4 @@
-name: Build & Release
+name: Build & Release Flutter App with Artifacts Apk files and firebase deploy
 'on' :
   push:
     branches:
